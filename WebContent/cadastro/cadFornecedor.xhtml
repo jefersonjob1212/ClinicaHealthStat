@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+
+	<ui:define name="title">Cadastro de Fornecedor</ui:define>
+
+
+	<ui:define name="head">
+		
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="formCadastroFornecedor" prependId="false">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:tabView orientation="top">
+								<p:tab title="Fornecedor">
+									<p:messages /> 
+									<p:panelGrid id="gridFornecedor" columns="6" layout="grid"
+									 styleClass="ui-panelgrid-blank form-group form-elements" 
+									 style="border:0px none; background-color:transparent;"
+									columnClasses="ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-4,
+												   
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   
+												   ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-2 ">
+
+
+										<!-- Label Nome da Fornecedor -->
+										<h:outputLabel id="labelNomeConsultaFornecedor"
+											for="nomeFornecedor" value="Fornecedor:*" />
+
+										<!-- Input Nome da Fornecedor -->
+										<p:inputText id="nomeFornecedor" styleClass="estiloInputNome"
+											required="true" maxlength="100" placeholder="Nome do Fornecedor"
+											value="#{fornecedorBeanView.objetoSelecionado.nomeFornecedor}"
+											requiredMessage="Informe o nome do fornecedor" />
+
+
+										<!-- Label Valor Ie -->
+										<h:outputLabel for="inscricaoEstadual" id="labelIe"
+											value="Inscrição Estadual:*" style="color: #2e6e9e;font-weight: bold;" />
+
+										<p:inputMask id="inscricaoEstadual"
+											value="#{fornecedorBeanView.objetoSelecionado.inscricaoEstadual}"
+										    placeholder="Inscrição Estadual"
+											required="true" maxlength="100"
+											requiredMessage="Informe a incrição estadual" />
+											
+											<!-- Label Cnpj -->
+										<h:outputLabel for="cnpj" id="labelCnpj" value="CNPJ:*" />
+
+										<p:inputMask id="cnpj"
+											value="#{fornecedorBeanView.objetoSelecionado.cnpj}"
+											mask="99.999.999/9999-99" placeholder="78.425.986/0036-15"
+											required="true" maxlength="100"
+											requiredMessage="Informe o cnpj do Fornecedor" />
+											
+										<!-- Label Valor NomeFantasia -->
+										<h:outputLabel for="nomeFantasia" id="labelNomeFantasia"
+											value="Fantasia:*" />
+
+										<p:inputText id="nomeFantasia" rendered="true" placeholder="Nome Fantasia do Fornecedor"
+											requiredMessage="Informe o Nome Fantasia"
+											value="#{fornecedorBeanView.objetoSelecionado.nomeFantasia}" />
+
+										<!-- Label Valor TELEFONE -->
+										<h:outputLabel for="telefoneComercial" id="labelTelefoneComercial"
+											value="Contato Comercial:*"   style="color: #2e6e9e; font-weight: bold;"/>
+
+										<p:inputMask id="telefoneComercial"
+											value="#{fornecedorBeanView.objetoSelecionado.telefone}"
+											mask="(999)9999-9999" placeholder="(043)3422-3422"
+											required="true" maxlength="15"
+											requiredMessage="Informe o Telefone de Comercial" />
+
+										<!-- Label Valor TELEFONE -->
+										<h:outputLabel for="telefoneContato" id="labelCelular"
+											value="Telefone:" />
+
+										<p:inputMask id="celularContato"
+											value="#{fornecedorBeanView.objetoSelecionado.telefone}"
+											mask="(999)9 9999-9999" placeholder="(043)9 9961-4073"
+											maxlength="16"/>
+											
+											<!-- Label RAZAO SOCIAL -->
+										<h:outputLabel for="razaoSocial" id="labelRazaoSocial"
+											value="Razão:*" style="color: #2e6e9e; font-weight: bold;" />
+
+										<p:inputText id="razaoSocial" rendered="true" 
+											requiredMessage="Informe a razão" placeholder="Razão Social"
+											value="#{fornecedorBeanView.objetoSelecionado.razaoSocial}" />
+
+									</p:panelGrid>
+									<h6 style="color: red; font-weight: bold; font-style: italic;">
+										Campos marcados com * são Obrigatorios</h6>
+
+									<div class="espacoBranco" align="center">
+
+										<!-- Chama Botões  Recarrega Template growl messages e tabela de resultados-->
+										<util:botoesCrud managedBeanView="#{fornecedorBeanView}"
+											camposReload=":formTemplate:msg, tableResult"
+											botaoNovo="#{contextoBean.possuiAcesso('FORNECEDOR_NOVO', 'ADMIN')}"
+											botaoSalvar="#{contextoBean.possuiAcesso('FORNECEDOR_NOVO', 'ADMIN')
+												 and fornecedorBeanView.objetoSelecionado.idFornecedor == null}"
+											botaoAtualizar="#{contextoBean.possuiAcesso('FORNECEDOR_EDITAR', 'ADMIN') 
+												 and fornecedorBeanView.objetoSelecionado.idFornecedor != null}"
+											botaoRedirecionar="#{contextoBean.possuiAcesso('REDIRECIONAR_ACESSO', 'ADMIN')}"
+											botaoExcluir="false">
+										</util:botoesCrud>
+									</div>
+								</p:tab>
+
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+		<!-- JavaScript de Foco no Nome da Cidade e Configuração do Enter  -->
+		<script type="text/javascript" charset="UTF-8">
+			addFocoCampo("nomeFornecedor");
+			gerenciaTeclaEnter();
+		</script>
+
+
+	</ui:define>
+</ui:composition>

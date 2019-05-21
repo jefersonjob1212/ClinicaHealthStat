@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+					<!-- Campo CODIGO -->
+			<p:column style="background-color: #d7e7f9; border: none;border-style: hidden; width:50px; "  >
+				<center>
+					<f:facet name="header">Código</f:facet>
+					<h:outputText value="#{objeto.idUnidadeDeMedida}" />
+				</center>
+
+			</p:column>
+			<!-- Campo NOME -->
+			<p:column style="width:100px">
+				<center>
+					<f:facet name="header">UN de Medida</f:facet>
+					<h:outputText  value="#{objeto.nomeUnidadeDeMedida}" />
+				</center>
+
+			</p:column>
+			<!-- Campo Observação -->
+			<p:column style="width:100px">
+				<center>
+					<f:facet name="header">Observação</f:facet>
+					<h:outputText style="font-weight: bold" value="#{objeto.observacao}" />
+				</center>
+
+			</p:column>
+			
+			<!-- Botão EDITAR -->
+			<sec:ifAnyGranted roles="UNIDADE_DE_MEDIDA_EDITAR, ADMIN">
+				<p:column style="width:50px">
+					<center>
+						<f:facet name="header">Editar</f:facet>
+						<p:commandLink action="#{unidadeDeMedidaBeanView.editar}"
+							update="@form" id="editarUnidadeDeMedida" ajax="true"
+							immediate="true">
+							<h:graphicImage library="img" name="editar16.png" />
+							<f:setPropertyActionListener value="#{objeto}"
+								target="#{unidadeDeMedidaBeanView.objetoSelecionado}" />
+						</p:commandLink>
+					</center>
+				</p:column>
+			</sec:ifAnyGranted>
+
+
+			<!-- Botão EXCLUIR  "#{p:component('tableResult')}"-->
+			<sec:ifAnyGranted roles="UNIDADE_DE_MEDIDA_EXCLUIR, ADMIN">
+				<p:column style="width:50px" >
+					<center>
+						<f:facet name="header">Excluir</f:facet>
+								<p:commandLink action="#{unidadeDeMedidaBeanView.excluir}"
+									update="tableResult" id="excluirunidadeDeMedida" ajax="true"
+									immediate="true"
+									 onclick="if(!confirm('Confirma a exclusão da Medida : #{objeto.nomeUnidadeDeMedida}?')) return false;">
+									<h:graphicImage library="img" name="excluir16.png" />
+									<f:setPropertyActionListener value="#{objeto}"
+										target="#{unidadeDeMedidaBeanView.objetoSelecionado}" />
+								</p:commandLink>	
+					</center>
+				</p:column>
+			</sec:ifAnyGranted>
+
+	
+</html>

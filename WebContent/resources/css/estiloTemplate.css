@@ -1,0 +1,111 @@
+/*PLACEHOLDER DOS INPUTS*/
+::-webkit-input-placeholder {
+	color: red;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+	color: red;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+	color: red;
+}
+
+:-ms-input-placeholder {
+	color: red;
+}
+
+/*RESPONSIVIDADE COMEÇO */
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 80px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+/* RESPONSIVIDADE FIM*/
+
+/*ALTERAÇÃO EM CAMPOS DO GRID LAYOUT INICIO*/
+.ui-lg-1 {
+	padding-top: 10px !important;
+	text-align: justify;
+	/* width: 95px !important; */
+}
+
+.ui-lg-2 {
+	width: 150px;
+}
+
+.ui-lg-3 {
+	color: #2e6e9e !important;
+}
+
+.ui-lg-2 label {
+	color: #2e6e9e !important;
+	font-weight: bold !important;
+}
+
+.ui-lg-1 label {
+	color: #2e6e9e;
+	font-weight: bold;
+}
+
+.estilo100 {
+	width: 100% !important;
+}
+
+/*ALTERAÇÃO EM CAMPOS DO GRID LAYOUT FIM*/
+
+/*ESTILO DO MESSAGES NO ERROS DE VALIDAÇÃO DOS CADASTROS INICIO*/
+.validacaoCadastroMessages {
+	font-weight: bold !important;
+}
+/*ESTILO DO MESSAGES NO ERROS DE VALIDAÇÃO DOS CADASTROS FIM*/
+
+/*NOME LABEL IDENTIFICAÇÃO DAS TELAS DE CADASTRO */
+.estiloLabelCadastroIdentificacao {
+	font-weiht: bold;
+	font-size: 25px
+}
+
+/*NOME LABEL IDENTIFICAÇÃO DAS TELAS DE CADASTRO */
+
+/**/
+.invalidarSessao {
+	background: #c5dbec;
+	background-color: Transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	border: 1px solid #c5dbec;
+	font-weight: bold;
+	color: #1d5987;
+	width: 200px;
+	heigth: 50px;
+	padding: .3em 1em;
+	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;
+	font-size: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 5px;
+}
+
+.labelInvalidarSessao {
+	font-weigth: bold;
+	font-size: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 250px
+}
+/**/

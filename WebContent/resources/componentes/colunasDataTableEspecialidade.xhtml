@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+
+			<!-- Campo NOME -->
+			<p:column >
+				<center>
+					<f:facet name="header">Especialidade</f:facet>
+					<h:outputText value="#{objeto.nomeEspecialidade}" />
+				</center>
+			
+			</p:column>
+			<!-- Campo Observação -->
+			<p:column >
+				<center>
+					<f:facet name="header">Observação</f:facet>
+					<h:outputText style="font-weight: bold" value="#{objeto.observacao}" />
+				</center>
+			
+			</p:column>
+			
+			<!-- Botão EDITAR -->
+			<sec:ifAnyGranted roles="ESPECIALIDADE_EDITAR, ADMIN">
+				<p:column >
+					<center>
+						<f:facet name="header">Editar</f:facet>
+						<p:commandLink action="#{especialidadeBeanView.editar}"
+							update="@form" id="editarEspecialidade" ajax="true" immediate="true">
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+							<f:setPropertyActionListener value="#{objeto}"
+								target="#{especialidadeBeanView.objetoSelecionado}" />
+						</p:commandLink>
+					</center>
+				</p:column>
+			</sec:ifAnyGranted>
+			
+			
+			<!-- Botão EXCLUIR  -->
+			<sec:ifAnyGranted roles="ESPECIALIDADE_EXCLUIR, ADMIN">
+				<p:column >
+					<center>
+						<f:facet name="header">Excluir</f:facet>
+						<p:commandLink action="#{especialidadeBeanView.excluir}"
+							update="tableResult" id="excluirEspecialidade" ajax="true"
+							immediate="true"
+							onclick="if(!confirm('Confirma a exclusão da Especilidade : #{objeto.nomeEspecialidade}?')) return false;">
+							<i class="fa fa-trash" aria-hidden="true"></i>
+							<f:setPropertyActionListener value="#{objeto}"
+								target="#{especialidadeBeanView.objetoSelecionado}" />
+						</p:commandLink>
+					</center>
+				</p:column>
+			</sec:ifAnyGranted>
+
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title><ui:insert name="titulo">Clinica Médica</ui:insert></title>
+
+	<h:outputScript name="jquery.js" library="primefaces/jquery" />
+	<h:outputStylesheet name="estilo.css" library="css" />
+	<h:outputScript name="scripty.js" library="javascript" />
+</h:head>
+
+<h:body>
+	<div class="asclepioImagem" id="imagemlogin" align="left" >
+		<h:graphicImage library="img" name="cad.png" height="200px"	width="200px"/>
+	</div>
+<!-- 	<div id="keyslogin" align="left" style="left :60%"> -->
+<!-- 		<h:graphicImage library="img" name="keys.png" styleClass="bordaImagem" /> -->
+<!-- 	</div> -->
+
+
+
+	<div id="formlogin" align="left">
+		<br />
+		<h:panelGroup rendered="#{!empty param.login_error}">
+			<h:outputLabel
+				rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message == 'Bad credentials'}">
+				<span class="estiloSpanPermissaoNegada"> Permissão Negada, login ou senha
+					incorretos. </span>
+			</h:outputLabel>
+
+			<h:outputLabel
+				rendered="#{SPRING_SECURITY_LAST_EXCEPTION.message == 'Maximum sessions of 1 for this principal exceeded'}">
+				<span class="estiloSpan">Você está logado em outra sessão. </span>
+
+				<h:commandButton value="Encerrar"
+					style="height:40px;width: 100px; border:1px; 	"
+					onclick="invalidateSession('#{request.contextPath}', '/publico/invalidateSession');" />
+
+			</h:outputLabel>
+
+		</h:panelGroup>
+
+		<br />
+
+		<form id="formulario" method="post" name="formulario"
+			onsubmit="return validarSenhaLogin();"
+			action="#{request.contextPath}/j_spring_security_check">
+			
+			<!-- Campo Login  -->
+			<span class="divDoLogin">
+				<span class="estiloCamposLogin">
+					Login 
+				</span> 
+				
+				<!-- Entrada do Campo Login -->
+				<input class="estiloInputsLogin" type="text" name="j_username" id="j_username"  />
+			</span> 
+			
+			<!-- Campo Senha -->
+			<span class="divDoLogin">
+				<span class="estiloCamposLogin">
+					Senha
+			    </span> 
+			   	
+			   	<!-- Entrada do Campo Senha -->
+			    <input class="estiloInputsLogin" type="password" name="j_password" id="j_password" />
+			</span> 
+			
+			<!-- Botão Entrar Loging -->
+			<span class="divBotaoLogin">
+				<button class="estiloBotaoLogin"
+						type="submit" 
+						id="buttonLogin">
+						Entrar
+				</button>
+			</span>
+		</form>
+	</div>
+	<script>
+		$('#j_username').focus();
+	</script>
+</h:body>
+</html>

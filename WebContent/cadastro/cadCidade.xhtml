@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Cadastro de Cidade</ui:define>
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 80px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.ui-lg-1 {
+	padding-top: 10px !important;
+	text-align: justify;
+}
+
+.ui-lg-2 {
+	width: 150px;
+}
+
+.ui-lg-3 {
+	position: left;
+}
+
+.ui-lg-1 label {
+	color: #2e6e9e;
+	font-weight: bold;
+}
+
+.label {
+	font-weight: bold !important;
+	width: 20%;
+	padding: 4px;
+}
+
+.value {
+	width: 60%;
+	padding: 4px;
+}
+
+.estilo100 {
+	width: 100% !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="formCadastroCidade" prependId="false">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:tabView orientation="top" >
+								<p:tab title="Cidade" >
+									<p:messages />
+									<p:panelGrid columns="6" layout="grid"
+										styleClass="ui-panelgrid-blank form-group form-elements"
+										style="border:0px none; background-color:transparent;"
+										columnClasses="ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-5,
+												   
+												   ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-5
+												   
+												  ">
+										<!-- Label Nome da Cidade -->
+										<h:outputLabel id="labelNomeConsultaCidade" for="cidadeNome"
+											value="Nome:*" />
+
+										<!-- Input Nome da Cidade-->
+										<p:inputText id="cidadeNome" styleClass="estiloInputNome"
+											required="true" maxlength="100" placeholder="Informe o Nome da Cidade"
+											value="#{cidadeBeanView.objetoSelecionado.cidade_descricao}"
+											requiredMessage="Informe o nome da cidade" />
+
+										<!-- Label Nome do Estado -->
+										<h:outputLabel for="estado" id="labelEstado"
+											value="Estado:*" />
+
+										<p:selectOneMenu id="estado" style="width:210px;"
+											rendered="true" requiredMessage="Informe o Estado"
+											value="#{cidadeBeanView.objetoSelecionado.estado}">
+											<f:selectItems value="#{estadoBeanView.estados}" />
+										</p:selectOneMenu>
+
+									</p:panelGrid>
+									
+									<h6 style="color: red; font-weight: bold; font-style: italic;">
+										Campos marcados com * são Obrigatorios</h6>
+								
+									<div align="center">
+										<!-- Chama Botões | tabela de resultados-->
+
+										<util:botoesCrud managedBeanView="#{cidadeBeanView}"
+											camposReload=":formTemplate:msg, tableResult"
+											botaoNovo="#{contextoBean.possuiAcesso('CIDADE_NOVO', 'ADMIN')}"
+											botaoSalvar="#{contextoBean.possuiAcesso('CIDADE_NOVO', 'ADMIN')
+					 and cidadeBeanView.objetoSelecionado.id_cidade == null}"
+											botaoAtualizar="#{contextoBean.possuiAcesso('ACESSO_EDITAR', 'ADMIN') 
+					 and cidadeBeanView.objetoSelecionado.id_cidade != null}"
+											botaoRedirecionar="#{contextoBean.possuiAcesso('ACESSO_REDIRECIONAR', 'ADMIN')}"
+											botaoExcluir="false">
+										</util:botoesCrud>
+									</div>
+								</p:tab>
+
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

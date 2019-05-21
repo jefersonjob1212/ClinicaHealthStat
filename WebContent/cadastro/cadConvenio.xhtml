@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Cadastro de Convênio</ui:define>
+
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 80px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.ui-lg-1 {
+	padding-top: 10px !important;
+	text-align: justify;
+}
+
+.ui-lg-2 {
+	width: 150px;
+}
+
+.ui-lg-3 {
+	position: left;
+}
+
+.ui-lg-1 label {
+	color: #2e6e9e;
+	font-weight: bold;
+}
+
+.label {
+	font-weight: bold !important;
+	width: 20%;
+	padding: 4px;
+}
+
+.value {
+	width: 60%;
+	padding: 4px;
+}
+
+.estilo100 {
+	width: 100% !important;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<!-- Cadastro de Convênio FORM -->
+		<h:form id="formCadastroConvênio" prependId="false">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:tabView orientation="top">
+								<p:tab title="Convênio">
+									<p:messages />
+									<h:panelGrid id="gridConvenio" columns="4">
+
+										<!-- Label Código -->
+										<!-- 					<h:outputLabel for="id" value="Código: " id="labelId" />
+ -->
+										<!-- Input Código -->
+										<!-- 			<p:inputText id="id" styleClass="estiloIdCadastro" disabled="true"
+						value="#{convenioBeanView.objetoSelecionado.idConvenio}" />
+			 -->
+										<!-- Label Nome da Convênio -->
+										<h:outputLabel id="labelNomeConsultaEspecialidade"
+											for="convenioNome" value="Nome * :" />
+
+										<!-- Input Nome da Convênio-->
+										<p:inputText id="convenioNome" styleClass="estiloInputNome"
+											required="true" maxlength="100"
+											value="#{convenioBeanView.objetoSelecionado.nomeConvenio}"
+											requiredMessage="Informe a Convênio" />
+										
+										<!-- Label Valor Decréscimo -->
+										<!-- 
+										<h:outputLabel id="labelValorDecrescimoConvenio"
+											for="valorDecrescimoConvenio" value="Valor de Desconto * :" /> -->
+
+										<!-- Input Valor Decréscimo -->
+										<!--  
+										<p:inputText id="valorDecrescimoConvenio"
+											styleClass="estiloInputNome"
+											value="#{convenioBeanView.objetoSelecionado.valorDecrescido}" />
+										-->
+										 
+
+
+									</h:panelGrid>
+									
+									<h6 style="
+										color: red; 
+										font-weight: bold; 
+										font-style: italic;" >
+										Campos marcados com * são Obrigatorios
+									</h6>
+
+									<div class="espacoBranco"  align="center">
+
+									<!-- Chama Botões  Recarrega Template growl messages e tabela de resultados-->
+									<util:botoesCrud managedBeanView="#{convenioBeanView}"
+										camposReload=":formTemplate:msg, tableResult"
+										botaoNovo="#{contextoBean.possuiAcesso('CONVENIO_NOVO', 'ADMIN')}"
+										botaoSalvar="#{contextoBean.possuiAcesso('CONVENIO_NOVO', 'ADMIN')
+											 and convenioBeanView.objetoSelecionado.idConvenio == null}"
+										botaoAtualizar="#{contextoBean.possuiAcesso('ACESSO_EDITAR', 'ADMIN') 
+											 and convenioBeanView.objetoSelecionado.idConvenio != null}"
+										botaoRedirecionar="#{contextoBean.possuiAcesso('ACESSO_REDIRECIONAR', 'ADMIN')}"
+										botaoExcluir="false">
+									</util:botoesCrud>
+									</div>
+
+								</p:tab>
+
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+		<!-- JavaScript de Foco no Nome da especialidade  Configuração do Enter  -->
+		<script type="text/javascript" charset="UTF-8">
+			addFocoCampo("nomeConvenio");
+			gerenciaTeclaEnter();
+		</script>
+	</ui:define>
+</ui:composition>
+

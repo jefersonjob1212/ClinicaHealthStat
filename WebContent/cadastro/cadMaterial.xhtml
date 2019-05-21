@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	
+
+		<ui:define name="title">Cadastro de Material</ui:define>
+
+<ui:define name="head">
+
+</ui:define>
+	
+		<ui:define name="content">
+		<h:form id="formCadastroMaterial" prependId="false">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<p:tabView orientation="top">
+								<p:tab title="Fornecedor">
+									<p:messages />
+									<p:panelGrid id="gridCidade" columns="6"
+									styleClass="ui-panelgrid-blank form-group form-elements"  layout="grid"
+									 style="border:0px none; background-color:transparent;"
+									 columnClasses="ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-4,
+												   
+												   ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   
+												   ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-2 ">
+											<!-- Label Nome da Material -->
+										<h:outputLabel id="labelNomeConsultaMaterial"
+											for="materialNome" value="Material:*" />
+
+										<!-- Input Nome da Material -->
+										<p:inputText id="materialNome" placeholder="Nome do Material"
+											styleClass="estiloInputNome" required="true" maxlength="100"
+											value="#{materialBeanView.objetoSelecionado.nomeMaterial}"
+											requiredMessage="Informe o nome do material" />
+
+										<!-- Label Quantidade -->
+										<h:outputLabel for="quantidadeMaterial"
+											id="labelQuantidadeMaterial" value="Qtd:*" />
+
+										<p:inputMask autocomplete="false" maxlength="8"
+											placeholder="Quantidade" id="quantidadeMaterial"
+											rendered="true"
+											requiredMessage="Informe a quantidade do material"
+											mask="9?99999"
+											value="#{materialBeanView.objetoSelecionado.quantidade}" />
+
+
+										<!-- Label Valor Unitario -->
+										<h:outputLabel for="valorUnitario" id="labelValorUnitario"
+											value="R$ Valor:*" />
+
+										<p:inputMask id="valorUnitario" rendered="true"
+											placeholder="R$ Valor Unitário"
+											requiredMessage="Informe a valor do material" mask="99"
+											value="#{materialBeanView.objetoSelecionado.valorUnitario}" />
+
+										<!-- Label Cidade do Paciente -->
+										<h:outputLabel id="labelSelectNomeFornecedor"
+											for="SelectNomeFornecedor" value="Empresa:*" />
+
+										<p:selectOneMenu id="SelectNomeFornecedor"
+											styleClass="estilo100" required="true"
+											requiredMessage="Informe um fornecedor"
+											value="#{materialBeanView.objetoSelecionado.fornecedor}">
+											<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+											<f:selectItems value="#{fornecedorBeanView.fornecedores}" />
+										</p:selectOneMenu>			
+									
+									</p:panelGrid>
+									<h6 style="
+										color: red; 
+										font-weight: bold; 
+										font-style: italic;" >
+										Campos marcados com * são Obrigatorios
+									</h6>
+						
+									<div class="espacoBranco" align="center">
+
+									<!-- Chama Botões  Recarrega Template growl messages e tabela de resultados-->
+									<util:botoesCrud managedBeanView="#{materialBeanView}"
+										camposReload=":formTemplate:msg, tableResult"
+										botaoNovo="#{contextoBean.possuiAcesso('MATERIAL_NOVO', 'ADMIN')}"
+										botaoSalvar="#{contextoBean.possuiAcesso('MATERIAL_NOVO', 'ADMIN')
+					 and materialBeanView.objetoSelecionado.idMaterial == null}"
+										botaoAtualizar="#{contextoBean.possuiAcesso('MATERIAL_EDITAR', 'ADMIN') 
+					 and materialBeanView.objetoSelecionado.idMaterial != null}"
+										botaoRedirecionar="#{contextoBean.possuiAcesso('REDIRECIONAR_ACESSO', 'ADMIN')}"
+										botaoExcluir="false">
+									</util:botoesCrud>
+								</div>
+								
+								</p:tab>
+									
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<!-- JavaScript de Foco no Nome da Cidade e Configuração do Enter  -->
+		<script type="text/javascript" charset="UTF-8">
+			addFocoCampo("nomeMaterial");
+			gerenciaTeclaEnter();
+		</script>
+
+	</ui:define>
+</ui:composition>
+

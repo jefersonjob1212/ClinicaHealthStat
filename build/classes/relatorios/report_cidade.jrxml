@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_cidade" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ffdefb05-3558-491e-b0c8-1b627a804595">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="REPORT_PARAMETERS_IMG" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="cidade_descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[cidade_descricao]]></fieldDescription>
+	</field>
+	<field name="id_cidade" class="java.lang.Long">
+		<fieldDescription><![CDATA[id_cidade]]></fieldDescription>
+	</field>
+	<field name="estado" class="br.com.projeto.model.classes.Estado">
+		<fieldDescription><![CDATA[estado]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="93" splitType="Stretch">
+			<rectangle>
+				<reportElement x="10" y="0" width="545" height="93" backcolor="#CCCCCC" uuid="d9d04e9e-79ad-4dcb-8418-d3ae9d9c16ec"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="38" y="0" width="274" height="68" uuid="8ec4ec97-7aa1-461d-829c-2472b256a41b"/>
+				<textElement verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Relatório de Cidades]]></text>
+			</staticText>
+			<image>
+				<reportElement x="330" y="0" width="214" height="79" uuid="97296182-7087-44dd-9b39-f260c1e5f952"/>
+				<imageExpression><![CDATA[$P{REPORT_PARAMETERS_IMG} + "loginHealthStat.png"]]></imageExpression>
+			</image>
+			<textField pattern="yyyy/MM/dd HH:mm:ss" isBlankWhenNull="true">
+				<reportElement x="112" y="68" width="100" height="25" uuid="cb23f727-5301-4dbb-8864-2a7c244e7a6f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="38" y="68" width="74" height="25" uuid="20060edb-9ec6-4c3e-bcf1-57c25068be70"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emissão:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="15" width="100" height="20" uuid="6ee52d2e-b72a-4451-a94c-7838f0c70fc7"/>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="15" width="212" height="20" uuid="831f3ee6-1519-481d-bfde-14bb2f3d9bc1"/>
+				<text><![CDATA[Cidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="15" width="181" height="20" uuid="0bf57c69-b504-4cc3-834a-d606860616c8"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="62" y="0" width="100" height="20" uuid="04825825-a988-4ab2-96e2-f1f7b19482d3"/>
+				<textFieldExpression><![CDATA[$F{id_cidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="212" height="20" uuid="ad749470-2e70-4488-afea-b293641c9a20"/>
+				<textFieldExpression><![CDATA[$F{cidade_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="0" width="181" height="20" uuid="dd77a440-60bd-438e-91b3-e26187fc5f63"/>
+				<textFieldExpression><![CDATA[""+$F{estado}.getEstado_nome()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch"/>
+	</pageFooter>
+	<noData>
+		<band height="31">
+			<staticText>
+				<reportElement x="209" y="0" width="143" height="31" uuid="33b314bd-c584-411f-848d-f72ba4789e50"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Não há dados]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

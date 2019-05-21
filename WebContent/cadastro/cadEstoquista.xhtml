@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Cadastro de Estoquista</ui:define>
+
+	<ui:define name="head">
+	
+	</ui:define>
+
+
+	<ui:define name="content">
+
+		<!-- Cadastro de PACIENTE FORM -->
+		<h:form id="formCadastro" prependId="false">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<div align="center">
+								<br />
+								<p:outputLabel value="Cadastro de Estoquista"
+									styleClass="estiloLabelCadastroIdentificacao" />
+								<br />
+							</div>
+							<br />
+							<p:tabView id="abaEstoquista" orientation="top">
+								<p:tab id="tabEstoquista" title="Estoquista">
+								
+								<p:messages />
+									<p:panelGrid id="gridEstoquista" columns="6" layout="grid" 
+									 styleClass="ui-panelgrid-blank form-group form-elements" 
+									 style="border:0px none; background-color:transparent;"
+									 columnClasses="
+									 			   ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-3,
+												   
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   
+												   ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-2" >
+									
+											<!-- Label Nome  -->
+										<h:outputLabel id="labelNomeEstoquista" for="nomeEstoquista"
+											value="Nome: *" />
+
+										<!-- Input Nome  -->
+										<p:inputText id="nomeEstoquista" 
+											required="true" maxlength="150" placeholder="Nome Completo do Estoquista"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaNome}"
+											requiredMessage="Informe o nome do Estoquista" />
+									
+										<!-- Label Nascimento -->
+										<h:outputLabel id="labelDataNascimentoEstoquista"
+											for="estoquistaDataNascimento" value="Dt.Nascimento:*" />
+
+										<!-- Input Nascimento  -->
+										<p:calendar id="estoquistaDataNascimento"
+											required="true" maxlength="10"
+											pattern="dd/MM/yyyy" mask="true" navigator="true" placeholder="27/01/1997"
+											maxdate="today" mindate="1/1/50" pagedate="1/1/80"
+											autocomplete="true"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaDataNascimento}"
+											requiredMessage="Informe o Data de Nascimento" />
+
+										<!-- Label Sexo -->
+										<h:outputLabel id="labelSexoEstoquista" for="estoquistaSexo"
+											value="Sexo: *" />
+
+										<!-- Input Sexo -->
+										<p:selectOneMenu id="estoquistaSexo"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaSexo}"
+											required="true" requiredMessage="Selecione um Gênero"
+											style="width:100%; padding:center;">
+												<f:selectItem itemLabel=" Selecione" noSelectionOption="true"/>
+												<f:selectItem itemLabel=" Masculino" itemValue="M" />
+												<f:selectItem itemLabel=" Feminino" itemValue="F" />
+											</p:selectOneMenu>
+										
+										<!-- Label Email -->
+										<h:outputLabel id="labelEmailEstoquista" for="estoquistaEmail"
+											value="Email: *" />
+
+										<!-- Input Email -->
+										<p:inputText id="estoquistaEmail" 
+											required="true" maxlength="100" placeholder="email@provedor.com"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaEmail}"
+											requiredMessage="Informe o email do paciente" />
+										
+										<!-- Label RG  -->
+										<h:outputLabel id="labelRgEstoquista" for="estoquistaRg"
+											value="RG: *" />
+
+										<!-- Input RG  -->
+										<p:inputMask id="estoquistaRg" placeholder="99.999.999-9"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaRG}"
+											mask="99.999.999-9" 
+											required="true"
+											requiredMessage="Informe o RG" />
+									
+										<!-- Label CPF  -->
+										<h:outputLabel id="labelCPFEstoquista" for="estoquistaCPF"
+											value="CPF: *" />
+
+										<!-- Input CPF  -->
+										<p:inputMask id="estoquistaCPF"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaCPF}"
+											mask="999.999.999-99"  placeholder="999.999.999.99"
+											required="true"
+											requiredMessage="Informe o Cpf" />
+											
+											<!-- Label Observaçao  -->
+										<h:outputLabel id="labelObservacaoEstoquista"
+											for="estoquistaObservaçao" value="Observação:" />
+
+										<!-- Input Observaçao-->
+										<p:inputTextarea id="estoquistaObservaçao" rows="1" cols="30"  placeholder="Informação extra !!"
+										    maxlength="315"  autoResize="true" value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaObservacao}" />
+										
+
+										<!-- Label Telefone Celular  -->
+										<h:outputLabel id="labelTelefonePrimarioEstoquista"
+											for="estoquistaTelefonePrimario" value="Celular:*" />
+
+										<!-- Input Telefone Celular  -->
+										<p:inputMask id="estoquistaTelefonePrimario"  placeholder="(DDD)9 9999-9999"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaTelefonePrimario}"
+											mask="(999)9999-9999" 	required="true"									
+											requiredMessage="Informe o Primario Telefone de Contato" />
+							
+										<!-- Label Telefone Fixo -->
+										<h:outputLabel id="labelTelefoneSecundarioestoquista"
+											for="estoquistaTelefoneSecundario" value="Fixo:" />
+
+										<!-- Input Telefone Fixo -->
+										<p:inputMask id="estoquistaTelefoneSecundario"  placeholder="(DDD)9 9999-9999"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.pessoaTelefoneSecundario}"
+											mask="(999)9 9999-9999" 
+											maxlength="12" />
+									</p:panelGrid>
+										
+									<h6 style="
+										color: red; 
+										font-weight: bold; 
+										font-style: italic;" >
+										Campos marcados com * são Obrigatorios
+									</h6>
+						
+										<div align="center">
+												<!-- Chama Botões | tabela de resultados-->
+										
+											<util:botoesCrud managedBeanView="#{estoquistaBeanView}"
+												camposReload=":formTemplate:msg, tableResult"
+												botaoNovo="#{contextoBean.possuiAcesso('ESTOQUISTA_NOVO', 'ADMIN')}"
+												botaoSalvar="#{contextoBean.possuiAcesso('ESTOQUISTA_SALVAR', 'ADMIN')
+												 and estoquistaBeanView.objetoSelecionado.idEstoquista == null}"
+												botaoAtualizar="#{contextoBean.possuiAcesso('ACESSO_EDITAR', 'ADMIN') 
+												 and estoquistaBeanView.objetoSelecionado.idEstoquista != null}"
+												botaoRedirecionar="#{contextoBean.possuiAcesso('ACESSO_REDIRECIONAR', 'ADMIN')}"
+												botaoExcluir="false">
+											</util:botoesCrud>
+										</div>					
+									
+								
+								</p:tab>
+								
+								<p:tab id="enderecoEstoquista" title="Endereço">
+										
+										<p:panelGrid id="gridEstoquistaEndereco" columns="4" layout="grid"
+										styleClass="ui-panelgrid-blank form-group form-elements"
+										style="border:0px none; background-color:transparent;"
+										columnClasses="		 ui-g-12 ui-md-6 ui-lg-1,
+												   			 ui-g-12 ui-md-6 ui-lg-4,
+												   			 
+												   			 ui-g-12 ui-md-6 ui-lg-1,	
+												  			 ui-g-12 ui-md-6 ui-lg-2
+												  			
+												  ">
+										
+										<!-- Label Cidade  -->
+										<h:outputLabel id="labelCidadeEstoquista"
+											for="estoquistaCidade" value="Cidade: *" />
+
+										<p:selectOneMenu id="estoquistaCidade" style="width:100%;"
+											required="true"
+											requiredMessage="Informe a Cidade do Paciente"
+											value="#{estoquistaBeanView.objetoSelecionado.pessoa.cidade}">
+											<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+											<f:selectItems value="#{cidadeBeanView.cidades}" />
+
+										</p:selectOneMenu>
+										
+										<h:outputLabel id="labelCEP" value="CEP:*" />
+										<p:inputText id="campoCep"  placeholder="86809110" autocomplete="true"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.cep}"
+											title="O endereço será pesquisado na base de dados do correio ao sair do campo cep"
+											required="true" requiredMessage="Digite um Cep Válido" maxlength="8">
+											 
+											<p:ajax event="blur" execute="@this" 
+												listener="#{medicoBeanView.pesquisarCep}"
+												update="logradouro,bairro,uf,complemento" />
+											<p:tooltip id="toolTipFocus" for="campoCep" showEvent="focus"
+												hideEvent="blur" />
+										</p:inputText>
+
+										<h:outputLabel id="labelBairro" value="Bairro:*" />
+										<p:inputText
+											value="#{medicoBeanView.objetoSelecionado.pessoa.bairro}"
+											id="bairro" placeholder="Bairro" required="true"
+											requiredMessage="Digite um Bairro válido">
+										</p:inputText>
+
+										<h:outputLabel id="labelUf" value="UF:*" />
+										<p:inputText id="uf"  placeholder="PR"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.uf}" 
+											/>
+
+										<h:outputLabel id="labelLogradouro" value="Endereço:*" />
+										<p:inputText id="logradouro" placeholder="Rua/Avenida João da Silva N 15"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.logradouro}"
+											required="true" requiredMessage="Digite um Endereço válido" />
+
+										<h:outputLabel id="labelComplemento" value="Detalhes:" />
+										<p:inputText id="complemento" placeholder="Casa/Apt/Bloco"
+										value="#{medicoBeanView.objetoSelecionado.pessoa.complemento}" />
+										
+										</p:panelGrid>
+								</p:tab>
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</h:form>
+
+	</ui:define>
+
+	<!-- JavaScript de Foco no Nome da Cidade e Configuração do Enter  -->
+	<script type="text/javascript" charset="UTF-8">
+		addFocoCampo("pessoa.pessoaNome");
+		gerenciaTeclaEnter();
+	</script>
+
+
+</ui:composition>

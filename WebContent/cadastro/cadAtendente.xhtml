@@ -1,0 +1,259 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Cadastro de Atendente</ui:define>
+
+	<ui:define name="head"></ui:define>
+
+
+
+	<ui:define name="content">
+		<h:form id="formCadastroAtendente" prependId="false">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							<div align="center">
+								<br />
+								<p:outputLabel value="Cadastro de Atendente"
+									styleClass="estiloLabelCadastroIdentificacao" />
+								<br />
+							</div>
+							<br />
+							<p:tabView id="abaAtendente" orientation="top">
+								<p:tab id="tabAtendente" title="Atendente">
+
+									<p:messages id="messagesErroatendente" closable="true"
+										showIcon="false" styleClass="validacaoCadastroMessages" />
+
+									<p:panelGrid id="gridAtendente" columns="6" layout="grid"
+										styleClass="ui-panelgrid-blank form-group form-elements"
+										style="border:0px none; background-color:transparent;"
+										columnClasses="
+										           ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-3,
+												   
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   
+												   ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-2">
+										<h:outputLabel id="labelNomeAtendente" for="atendenteNome"
+											value="Atendente: *" />
+
+										<p:inputText id="atendenteNome" required="true"
+											style="width: 100%" maxlength="150"
+											placeholder="Nome Completo do Atendente"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaNome}"
+											requiredMessage="Informe o Nome do Atendente" />
+
+										<!-- Label Nascimento do Atendente -->
+										<h:outputLabel id="labelDataNascimentoAtendente"
+											for="atendenteDataNascimento" value="Dt.Nascimento:*" />
+
+										<!-- Input Nascimento do Atendente -->
+										<p:calendar id="atendenteDataNascimento" size="16"
+											placeholder="27/01/1997" styleClass="estilo100"
+											required="true" maxlength="10" pattern="dd/MM/yyyy"
+											mask="true" maxdate="today" navigator="true"
+											mindate="01/01/1930" pagedate="01/01/1980"
+											autocomplete="true"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaDataNascimento}"
+											requiredMessage="Informe o Data de Nascimento do Atendente" />
+
+										<!-- Label Sexo do Atendente -->
+										<h:outputLabel id="labelSexoAtendente" for="atendenteSexo"
+											value="Sexo: *" style="text-align: right !important" />
+
+										<!-- Input Sexo do Atendente -->
+										<p:selectOneMenu id="atendenteSexo" autoWidth="true"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaSexo}"
+											required="true" requiredMessage="Selecione um Gênero"
+											styleClass="estilo100">
+											<f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+											<f:selectItem itemLabel=" Masculino" itemValue="M" />
+											<f:selectItem itemLabel=" Feminino" itemValue="F" />
+										</p:selectOneMenu>
+
+										<!-- Label Email do Atendente -->
+										<h:outputLabel id="labelEmailAtendente" for="atendenteEmail"
+											value="Email: *" />
+
+										<!-- Input Email do Atendente -->
+										<p:inputText id="atendenteEmail" styleClass="estilo100"
+											required="true" maxlength="100"
+											placeholder="Email@provedor.com"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaEmail}"
+											requiredMessage="Informe o email do Atendente" >
+											<f:validateRegex
+												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+										
+											</p:inputText>
+
+
+
+										<!-- Label RG do Paciente -->
+										<h:outputLabel id="labelRgAtendente" for="atendenteRg"
+											value="RG: *" />
+
+										<!-- Input RG do Paciente -->
+										<p:inputMask id="atendenteRg" placeholder="99.999.999-9"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaRG}"
+											mask="99.999.999-9" required="true"
+											requiredMessage="Informe o RG do Atendente" />
+
+										<h:outputLabel id="labelCPFatendente" for="atendenteCPF"
+											value="CPF: *" />
+
+										<!-- Input CPF  -->
+										<p:inputMask id="atendenteCPF"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaCPF}"
+											mask="999.999.999-99" styleClass="estilo100" required="true"
+											placeholder="999-999-999-99"
+											requiredMessage="Informe o Cpf do Atendente" />
+
+
+										<!-- Label Observaçao do Atendente  -->
+										<h:outputLabel id="labelObservacaoAtendente"
+											for="atendenteObservaçao" value="Observação:" />
+
+										<!-- Input Observaçao do Atendente -->
+										<p:inputTextarea id="atendenteObservaçao" rows="1" cols="30"
+											placeholder="Informação extra !!" maxlength="315"
+											autoResize="true"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaObservacao}" />
+
+
+										<!-- Label Telefone Celular do Atendente -->
+										<h:outputLabel id="labelTelefonePrimarioAtendente"
+											for="atendenteTelefonePrimario" value="Celular:*" />
+
+										<!-- Input Telefone Celular do Atendente -->
+										<p:inputMask id="atendenteTelefonePrimario"
+											placeholder="(DDD)9999-9999" required="true" requiredMessage="Informe um numero de Celular"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaTelefonePrimario}"
+											mask="(999)9999-9999" styleClass="estilo100" />
+
+
+										<!-- Label Telefone Fixo do Atendente -->
+										<h:outputLabel id="labelTelefoneSecundarioAtendente"
+											for="atendenteTelefoneSecundario" value="Fixo:" />
+
+										<!-- Input Telefone Fixo do Atendente -->
+										<p:inputMask id="atendenteTelefoneSecundario"
+											placeholder="(DDD)9 9999-9999"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaTelefoneSecundario}"
+											mask="(999)9 9999-9999" styleClass="estilo100" />
+
+										<p:outputLabel for="mask" value="Registro:" />
+										<p:calendar id="mask" styleClass="estilo100"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.pessoaDataRegistro}"
+											pattern="dd/MM/yyyy" mask="true" disabled="true" />
+
+									</p:panelGrid>
+									<h6 style="color: red; font-weight: bold; font-style: italic;">
+										Campos marcados com * são Obrigatorios</h6>
+
+									<div align="center">
+										<!-- Chama Botões | tabela de resultados-->
+
+										<util:botoesCrud managedBeanView="#{atendenteBeanView}"
+											camposReload=":formTemplate:msg, tableResult"
+											botaoNovo="#{contextoBean.possuiAcesso('ATENDENTE_NOVO', 'ADMIN')}"
+											botaoSalvar="#{contextoBean.possuiAcesso('SALVAR_ATENDENTE', 'ADMIN') 
+											and atendenteBeanView.objetoSelecionado.idAtendente == null}"
+											botaoAtualizar="#{contextoBean.possuiAcesso('ATUALIZAR_ATENDENTE', 'ADMIN')  
+											and atendenteBeanView.objetoSelecionado.idAtendente != null}"
+											botaoRedirecionar="#{contextoBean.possuiAcesso('ACESSO_REDIRECIONAR', 'ADMIN')}"
+											botaoExcluir="false">
+										</util:botoesCrud>
+									</div>
+
+								</p:tab>
+
+								<p:tab id="tabAtendenteEndereco" title="Endereço">
+
+									<h5 style="color: red; font-weight: bold; font-style: italic;">
+										*Digite o Cep e ele preencherá Bairro,UF e Endereço</h5>
+
+									<p:panelGrid id="gridMedicoEndereco" columns="4" layout="grid"
+										styleClass="ui-panelgrid-blank form-group form-elements"
+										style="border:0px none; background-color:transparent;"
+										columnClasses="		 ui-g-12 ui-md-6 ui-lg-1,
+												   			 ui-g-12 ui-md-6 ui-lg-4,
+												   			 
+												   			 ui-g-12 ui-md-6 ui-lg-1,	
+												  			 ui-g-12 ui-md-6 ui-lg-2
+												  			
+												  ">
+
+										<!-- Label Atendente da Cidade -->
+										<h:outputLabel id="labelCidadeAtendente" for="atendenteCidade"
+											value="Cidade: *" />
+
+										<p:selectOneMenu id="atendenteCidade" style="width:100%"
+											required="true" requiredMessage="Informe a Cidade "
+											dynamic="false" filter="true"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.cidade}">
+											<f:selectItem noSelectionOption="true"
+												itemLabel="Selecione a cidade" />
+											<f:selectItems value="#{atendenteBeanView.cidades}" />
+
+										</p:selectOneMenu>
+
+										<h:outputLabel id="labelCEP" value="CEP:*" />
+										<p:inputText id="campoCep" placeholder="86809110"
+											autocomplete="true"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.cep}"
+											title="O endereço será pesquisado na base de dados do correio ao sair do campo cep"
+											required="true" requiredMessage="Digite um Cep Válido"
+											maxlength="8">
+
+											<p:ajax event="blur" execute="@this"
+												listener="#{atendenteBeanView.pesquisarCep}"
+												update="logradouro,bairro,uf,complemento" />
+											<p:tooltip id="toolTipFocus" for="campoCep" showEvent="focus"
+												hideEvent="blur" />
+										</p:inputText>
+
+										<h:outputLabel id="labelBairro" value="Bairro:*" />
+										<p:inputText
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.bairro}"
+											id="bairro" placeholder="Bairro" required="true"
+											requiredMessage="Digite um Bairro válido">
+										</p:inputText>
+
+										<h:outputLabel id="labelUf" value="UF:*" />
+										<p:inputText id="uf" placeholder="PR"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.uf}" />
+
+										<h:outputLabel id="labelLogradouro" value="Endereço:*" />
+										<p:inputText id="logradouro"
+											placeholder="Rua/Avenida João da Silva N 15"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.logradouro}"
+											required="true" requiredMessage="Digite um Endereço válido" />
+
+										<h:outputLabel id="labelComplemento" value="Detalhes:" />
+										<p:inputText id="complemento" placeholder="Casa/Apt/Bloco"
+											value="#{atendenteBeanView.objetoSelecionado.pessoa.complemento}" />
+
+
+									</p:panelGrid>
+
+									<h6 style="color: red; font-weight: bold; font-style: italic;">
+										Campos marcados com * são Obrigatorios</h6>
+								</p:tab>
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Cadastro de Médico</ui:define>
+
+	<ui:define name="head">
+		
+	</ui:define>
+
+
+	<ui:define name="content">
+
+		<!-- Cadastro de Medico FORM -->
+		<h:form id="formCadastroMedico" prependId="false">
+			<div class="ui-fluid">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="card card-w-title">
+							
+							<div align="center">
+								<br />
+								<p:outputLabel value="Cadastro de Médico"
+									styleClass="estiloLabelCadastroIdentificacao" />
+								<br />
+							</div>
+							<br />
+							<p:tabView id="abaMedico" orientation="top" effect="blind">
+								<p:tab id="tabMedico" title="Médico">
+									<p:messages id="messagesErroMedico" closable="true" showIcon="false"
+										styleClass="validacaoCadastroMessages" />
+									<br />
+
+									<p:panelGrid id="gridMedico" columns="6" layout="grid"
+										styleClass="ui-panelgrid-blank form-group form-elements"
+										style="border:0px none; background-color:transparent;"
+										columnClasses="
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-3,
+												   
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   
+												   ui-g-12 ui-md-6 ui-lg-1,
+												   ui-g-12 ui-md-6 ui-lg-2">
+
+										<!-- Label Nome da Medico -->
+										<h:outputLabel id="labelNomeMedico" for="medicoNome"
+											value="Médico: *" />
+
+										<!-- Input Nome da Medico -->
+										<p:inputText id="medicoNome" required="true" maxlength="100"
+											placeholder="Nome Completo do Médico"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaNome}"
+											requiredMessage="Informe o Nome do medico" />
+
+										<!-- Label Nascimento do Medico -->
+										<h:outputLabel id="labelDataNascimentoMedico"
+											for="medicoDataNascimento" value="Dt. Nascimento:*" />
+
+										<!-- Input Nascimento do Medico -->
+										<p:calendar id="medicoDataNascimento" size="16"
+											placeholder="27/01/1997" required="true" maxlength="10"
+											styleClass="estilo100" pattern="dd/MM/yyyy" mask="true"
+											navigator="true" maxdate="today" mindate="01/01/1950"
+											pagedate="01/01/1990" autocomplete="true"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaDataNascimento}"
+											requiredMessage="Informe o Data de Nascimento do Medico" />
+
+										<!-- Label Sexo do medico -->
+										<h:outputLabel id="labelSexoMedico" for="medicoSexo"
+											value="Sexo: *" />
+
+										<!-- Input Sexo do medico -->
+										<p:selectOneMenu id="medicoSexo"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaSexo}"
+											required="true" requiredMessage="Selecione um Gênero"
+											style="width:100%;">
+
+											<f:selectItem itemLabel=" Masculino" itemValue="M" />
+											<f:selectItem itemLabel=" Feminino" itemValue="F" />
+										</p:selectOneMenu>
+
+										<!-- Label Email do Medico -->
+										<h:outputLabel id="labelEmailMedico" for="medicoEmail"
+											value="Email:*" />
+
+										<!-- Input Email do Medico -->
+										<p:inputText id="medicoEmail" required="true" maxlength="100"
+											placeholder="email@provedor.com"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaEmail}"
+											requiredMessage="Informe o email do medico"
+											validatorMessage="Formato de Email Inválido">
+											<f:validateRegex
+												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+										</p:inputText>
+
+										<!-- Label RG do Medico -->
+										<h:outputLabel id="labelRgMedico" for="medicoRg"
+											value="RG: *" />
+
+										<!-- Input RG do Medico -->
+										<p:inputMask id="medicoRg"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaRG}"
+											mask="99.999.999-9" required="true" maxlength="100"
+											placeholder="99.999.999.9"
+											requiredMessage="Informe o RG do Medico" />
+
+										<!-- Label CPF  -->
+										<h:outputLabel id="labelCPFmedico" for="medicoCPF"
+											value="CPF: *" />
+
+										<!-- Input CPF  -->
+										<p:inputMask id="medicoCPF"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaCPF}"
+											mask="999.999.999-99" required="true" styleClass="estilo100"
+											placeholder="999.999.999-99"
+											requiredMessage="Informe o Cpf do medico" />
+
+										<!-- Label Especialidade -->
+										<h:outputLabel value="Especialidades:*" />
+
+										<!-- Input Especialidade -->
+										<p:selectCheckboxMenu id="especialidadeMedica"
+											value="#{medicoBeanView.objetoSelecionado.especialidades}"
+											label="Especialidades" multiple="true" filter="true"
+											filterMatchMode="startsWith" panelStyle="width:250px"
+											converter="especialidadeConverter" >
+											<f:selectItems value="#{medicoBeanView.especialidades}"
+												var="e" itemValue="#{e}" itemLabel="#{e.nomeEspecialidade}">
+											</f:selectItems>
+
+										</p:selectCheckboxMenu>
+
+										<!-- Label Inscricao CRM do Medico -->
+										<h:outputLabel id="labelMedicoInscricao"
+											for="medicoInscriçãoCRM" value="Inscrição CRM:" />
+
+										<!-- Input  Inscricao CRM do Medico -->
+										<p:calendar id="medicoInscriçãoCRM"
+											placeholder="Data de inscrição" required="true" maxlength="10"
+											styleClass="estilo100" pattern="dd/MM/yyyy" mask="true"
+											navigator="true" maxdate="today" mindate="01/01/1950"
+											pagedate="01/01/1980" autocomplete="true"
+											value="#{medicoBeanView.objetoSelecionado.dataInscricaoCrm}"
+											requiredMessage="Informe a Data de Inscrição do CRM do Médico" />
+
+										<!-- Label Numero do Crm  -->
+										<h:outputLabel id="labelNomeAcompanhanteMedico"
+											for="medicoNumeroCRM" value="CRM: *" />
+
+										<!-- Input Numero do Crm-->
+										<p:inputMask id="medicoNumeroCRM" required="true"
+											placeholder="99.999"
+											value="#{medicoBeanView.objetoSelecionado.numeroCrm}"
+											mask="99.999" requiredMessage="Informe o CRM" />
+
+										<!-- Label Observaçao do medico  -->
+										<h:outputLabel id="labelObservacaoMedico"
+											for="medicoObservaçao" value="Observação:" />
+
+										<p:inputTextarea id="medicoObservaçao" rows="1"
+											maxlength="315" autoResize="true"
+											placeholder="Informação Extra!!"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaObservacao}" />
+
+
+										<!-- Label Telefone Celular do Medico -->
+										<h:outputLabel id="TelefonePrimarioMedico"
+											for="medicoaTelefonePrimario" value="Celular: *" />
+
+										<!-- Input Telefone Celular do Medico -->
+										<p:inputMask id="medicoaTelefonePrimario"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaTelefonePrimario}"
+											mask="(999)9 9999-9999" placeholder="(999)9 9999-9999"
+											required="true" requiredMessage="Digite um numero de Celular" />
+
+
+										<!-- Label Telefone Fixo do medico -->
+										<h:outputLabel id="labelTelefoneSecundarioMedico"
+											for="medicoTelefoneSecundario" value="Fixo:" />
+
+										<!-- Input Telefone Fixo do medico -->
+										<p:inputMask id="medicoTelefoneSecundario"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.pessoaTelefoneSecundario}"
+											mask="(999)9999-9999" placeholder="(999)9999-9999" />
+
+									</p:panelGrid>
+									
+									<h6
+												style="color: red; font-weight: bold; font-style: italic;">
+												Campos marcados com * são Obrigatorios</h6>
+
+									<p:spacer id="espaçoEntreBotao"></p:spacer>
+									<div align="center">
+										<util:botoesCrud managedBeanView="#{medicoBeanView}"
+											camposReload=":formTemplate:msg, tableResult"
+											botaoNovo="#{contextoBean.possuiAcesso('MEDICO_NOVO', 'ADMIN')}"
+											botaoSalvar="#{contextoBean.possuiAcesso('MEDICO_NOVO', 'ADMIN')
+												 and medicoBeanView.objetoSelecionado.idMedico == null}"
+											botaoAtualizar="#{contextoBean.possuiAcesso('MEDICO_EDITAR', 'ADMIN') 
+												 and medicoBeanView.objetoSelecionado.idMedico != null}"
+											botaoRedirecionar="#{contextoBean.possuiAcesso('REDIRECIONAR_ACESSO', 'ADMIN')}"
+											botaoExcluir="false">
+										</util:botoesCrud>
+									</div>
+								</p:tab>
+
+
+								<p:tab title="Endereço">
+									<p:messages closable="true" showIcon="false"
+										styleClass="font-weight: bold !important" />
+									<h5
+												style="color: red; font-weight: bold; font-style: italic;">
+												*Digite o Cep e ele preencherá Bairro,UF e Endereço</h5>
+									<br/>
+									
+									<p:panelGrid id="gridMedicoEndereco" columns="4" layout="grid"
+										styleClass="ui-panelgrid-blank form-group form-elements"
+										style="border:0px none; background-color:transparent;"
+										columnClasses="		 ui-g-12 ui-md-6 ui-lg-1,
+												   			 ui-g-12 ui-md-6 ui-lg-4,
+												   			 
+												   			 ui-g-12 ui-md-6 ui-lg-1,	
+												  			 ui-g-12 ui-md-6 ui-lg-2
+												  			
+												  ">
+
+										<!-- Label Cidade do Medico -->
+										<h:outputLabel id="labelCidadeMedico" for="medicoCidade"
+											value="Cidade: *" />
+
+										<p:selectOneMenu id="medicoCidade" style="width:100%"
+											required="true" requiredMessage="Informe a Cidade do Medico" dynamic="false" filter="true"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.cidade}" >
+											<f:selectItem noSelectionOption="true" 
+												itemLabel="Selecione a cidade" />
+											<f:selectItems value="#{medicoBeanView.cidades}" />
+
+										</p:selectOneMenu>
+
+										<h:outputLabel id="labelCEP" value="CEP:*" />
+										<p:inputText id="campoCep"  placeholder="86809110" autocomplete="true"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.cep}"
+											title="O endereço será pesquisado na base de dados do correio ao sair do campo cep"
+											required="true" requiredMessage="Digite um Cep Válido" maxlength="8">
+											 
+											<p:ajax event="blur" execute="@this" 
+												listener="#{medicoBeanView.pesquisarCep}"
+												update="logradouro,bairro,uf,complemento" />
+											<p:tooltip id="toolTipFocus" for="campoCep" showEvent="focus"
+												hideEvent="blur" />
+										</p:inputText>
+
+										<h:outputLabel id="labelBairro" value="Bairro:*" />
+										<p:inputText
+											value="#{medicoBeanView.objetoSelecionado.pessoa.bairro}"
+											id="bairro" placeholder="Bairro" required="true"
+											requiredMessage="Digite um Bairro válido">
+										</p:inputText>
+
+										<h:outputLabel id="labelUf" value="UF:*" />
+										<p:inputText id="uf"  placeholder="PR"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.uf}" 
+											/>
+
+										<h:outputLabel id="labelLogradouro" value="Endereço:*" />
+										<p:inputText id="logradouro" placeholder="Rua/Avenida João da Silva N 15"
+											value="#{medicoBeanView.objetoSelecionado.pessoa.logradouro}"
+											required="true" requiredMessage="Digite um Endereço válido" />
+
+										<h:outputLabel id="labelComplemento" value="Detalhes:" />
+										<p:inputText id="complemento" placeholder="Casa/Apt/Bloco"
+										value="#{medicoBeanView.objetoSelecionado.pessoa.complemento}" />
+
+									</p:panelGrid>
+									
+									<h6
+												style="color: red; font-weight: bold; font-style: italic;">
+												Campos marcados com * são Obrigatorios</h6>
+
+									<!-- <p:tooltip id="toolTipTrack" for="campoCep"
+										value="O endereço será pesquisado na base de dados do correio ao sair do campo cep"
+										trackMouse="true" /> -->
+
+									<!-- <p:tooltip id="toolTipTrackEspecialidade"
+										for="especialidadeMedica"
+										value="Selecione uma ou mais Especialidade" trackMouse="true" /> -->
+									<!-- <p:tooltip id="toolTipTrackBuscaSite" for="buscaCepSite" 
+										value="Não sabe o cep? vamos redirecionamos para busca no site do Correio" trackMouse="true" /> -->
+
+								</p:tab>
+
+							</p:tabView>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</h:form>
+
+
+
+		<!-- JavaScript de Foco no Nome da Cidade e Configuração do Enter  -->
+		<script type="text/javascript" charset="UTF-8">
+			addFocoCampo("pessoa.pessoaNome");
+			gerenciaTeclaEnter();
+		</script>
+
+
+	</ui:define>
+
+</ui:composition>
+

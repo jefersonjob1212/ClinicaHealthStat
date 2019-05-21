@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui">
+
+			
+			<!-- Campo NOME -->
+			<p:column style="width:150px; text-align: left">
+					<f:facet name="header" >Nome</f:facet>
+					<h:outputText  value="#{objeto.pessoa.pessoaNome}" />
+			</p:column>
+			
+			<p:column style="width:150px; text-align: left">
+					<f:facet name="header">Acompanhante</f:facet>
+					<h:outputText  value="#{objeto.nomeAcompanhante}" />
+				</p:column>
+			
+			<p:column style="width:100px; text-align: left">
+					<f:facet name="header">Cidade</f:facet>
+					<h:outputText  value="#{objeto.pessoa.cidade.cidade_descricao}" />
+			</p:column>
+			
+			<p:column style="width:100px">
+				<center>
+					<f:facet name="header">CPF</f:facet>
+					<h:outputText  value="#{objeto.pessoa.pessoaCPF}" />
+				</center>
+			</p:column>
+			
+			<p:column style="width:60px">
+				<center>
+					<f:facet name="header">RG</f:facet>
+					<h:outputText  value="#{objeto.pessoa.pessoaRG}" />
+				</center>
+			</p:column>
+			
+			<p:column style="width:100px">
+				<center>
+					<f:facet name="header">Telefone</f:facet>
+					<h:outputText  value="#{objeto.pessoa.pessoaTelefonePrimario}" />
+				</center>
+			</p:column>
+			
+			<!-- Botão EDITAR -->
+			<sec:ifAnyGranted roles="PACIENTE_EDITAR, ADMIN">
+				<p:column style="width:50px">
+					<center>
+						<f:facet name="header">Editar</f:facet>
+						<p:commandLink action="#{pacienteBeanView.editar}"
+							update="@form" id="editarAtendente" ajax="true"
+							immediate="true">
+							<i class="fa fa-pencil" aria-hidden="true"></i>							
+							<f:setPropertyActionListener value="#{objeto}"
+								target="#{pacienteBeanView.objetoSelecionado}" />
+						</p:commandLink>
+					</center>
+				</p:column>
+			</sec:ifAnyGranted>
+
+
+			
+			<sec:ifAnyGranted roles="PACIENTE_EXCLUIR, ADMIN">
+				<p:column style="width:50px" >
+					<center>
+						<f:facet name="header">Excluir</f:facet>
+								<p:commandLink action="#{pacienteBeanView.excluir}"
+									update="tableResult" id="excluirAtendente" ajax="true"
+									immediate="true"
+									 onclick="if(!confirm('Confirma a exclusão do paciente : #{objeto.pessoa.pessoaNome}?')) return false;">
+									<i class="fa fa-trash" aria-hidden="true"></i>
+									<f:setPropertyActionListener value="#{objeto}"
+										target="#{pacienteBeanView.objetoSelecionado}" />
+								</p:commandLink>	
+					</center>
+				</p:column>
+			</sec:ifAnyGranted>
+
+	
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:sec="http://www.springframework.org/security/facelets/tags"
+	xmlns:p="http://primefaces.org/ui">
+
+<sec:isAuthenticated>
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="titulo">Clinica Médica</ui:insert></title>
+		<h:outputScript name="primefaces.js" library="primefaces" id="jsPrime" /> 
+		<h:outputScript name="jquery.js" library="primefaces/jquery"
+			id="jsJquery" />
+<h:outputScript name="jquery-plugins.js" library="primefaces/jquery" 
+			id="jsJqueryPlugin" />
+			<h:outputStylesheet name="jquery-ui.css"
+			library="primefaces/jquery/ui" id="jsJqueryUi" />
+		<h:outputStylesheet name="primefaces.css" library="primefaces"
+			id="jdPrimeCss" />
+		<h:outputScript name="jquery.cookie.js" library="javascript"
+			id="jsJaqueryCookie" />
+		<h:outputScript name="jquery.maskMoney.min.js" library="javascript"
+			id="jsMaskMoneySistema" />
+		<h:outputScript name="jquery.maskedinput.js" library="javascript"
+			id="jsMaskInputSistema" />
+		<h:outputScript name="scripty.js" library="javascript"
+			id="jsScriptSistema" />
+		<h:outputScript name="jsf.js" library="javax.faces" />
+		<h:outputScript name="googlechart.js" library="javascript" />
+		<h:outputScript name="deployJava.js" library="javascript" />
+	</h:head>
+	<h:form id="formTemplateAntigo" prependId="false">
+
+		<h:outputStylesheet name="estilo.css" library="css"
+			id="cssStileSistema" />
+	<h:body>
+				
+<!-- Scrypty para nao Atualizar com botão f5 -->
+			<script type="text/javascript" charset="UTF-8">
+				localeData_pt_br();
+				initTemplate();
+				ocultarMenu();
+				//$.noConflit();
+
+				/*Bloqueia F5 do teclado*/
+				$(document).keydown(function(e) {
+					if (e.which == 116) {
+						return 116;
+					}
+				});
+			</script>
+
+			<!-- Incluir barra de Loading -->
+			<ui:include src="/templates/barraProgresso.xhtml" />
+
+			<!-- Mensagens do Sistema -->
+			<div id="msgError">
+				<p:growl id="msgTemplatePrincipalAntigo" showDetail="false" sticky="false" redisplay="true"
+					autoUpdate="true" life="10000" />
+				<p:tooltip id="toolTipFocus" globalSelector="a, :input, :button"
+					showEvent="focus" hideEvent="blur" />
+			</div>
+
+			<!-- Conteudo Header do Form  Logo e Status-->
+			<div id="container">
+				<div id="topo" style="background-color: #d7e7f9">
+
+					<!-- Logo HealtStat -->
+					<span class="divLogoHealthStat" id="spanLogo"> <h:graphicImage
+							library="img" name="logoHealthStat.png" id="logoImg"
+							styleClass="bordaImagem"
+							onclick="redirecionarPagina('#{request.contextPath}', '/restrito/principal')" />
+					</span>
+		
+					<!-- SPAN Dados do Login Atual -->
+					<span id="dadoslogin" class="spanColorLogin"> Usuário:
+						#{entidadeBeanView.usuarioLogadoSecurity} <br id="quebraUser" />
+						Ultimo Login: <h:outputText
+							value="#{entidadeBeanView.ultimoAcesso}" id="saidaUltimoAcesso">
+							<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm:ss"
+								dateStyle="long" timeStyle="full" timeZone="GMT-03:00" />
+						</h:outputText> <br id="quebraUltimoAcesso" /> <a href="#"
+						onclick="javascript:logout('#{request.contextPath}')">Sair</a>
+
+					</span>
+
+					<!-- Menu do Sistema SETA (ABA) -->
+					<span id="menuSistema"
+						style="position: absolute; right: 25px; top: 48px; width: 20px">
+						<a href="#" onclick="abrirMenupop();"> <h:graphicImage
+								library="img" name="setabaixo.png" styleClass="bordaImagem"
+								id="imgSetaBaixo" />
+					</a>
+
+					</span>
+
+				</div>
+
+<!-- Botão Menu Expansão -->
+<div id="menu" style="background-color: #d7e7f9 ;">
+				
+<!-- SPAN DO MENU  -->
+<span id="iniciarmenu" style="background-color: #d7e7f9"> 
+
+<p:commandButton id="dynaButton" value="Menu" type="button" icon="pi pi-home"  style="width: 170px; height: 35px;" /> 
+
+<p:menu	overlay="true" trigger="dynaButton" my="left top" at="left bottom" >
+				
+	<!-- SUB MENU AGENDAR -->					 
+	<sec:ifAnyGranted roles="AGENDAMENTO_ACESSAR, ADMIN">			
+		<p:submenu label="Agendar">
+			<sec:ifAnyGranted roles="AGENDAMENTO_CONSULTA_ACESSAR, ADMIN">	
+				<p:menuitem value="Consulta" action="#{menuView.delete}"
+				 	ajax="false" icon="pi pi-times" />
+			</sec:ifAnyGranted>	 
+		</p:submenu>
+	</sec:ifAnyGranted>
+	
+	<!-- SUB MENU CADASTROS -->
+	<sec:ifAnyGranted roles="CADASTROS_ACESSAR, ADMIN">
+		<p:submenu label="Cadastro">
+					
+			<!-- CADASTRO DE ATENDENTE -->
+			<sec:ifAnyGranted roles="ATENDENTE_ACESSAR, ADMIN">
+	 			<p:menuitem value="Atendente" action="#{atendenteBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="false" />
+			</sec:ifAnyGranted>
+			
+			<!-- CADASTRO DE ESTOQUISTA -->
+			<sec:ifAnyGranted roles="ATENDENTE_ACESSAR, ADMIN">
+			 	<p:menuitem value="Estoquista" action="#{estoquistaBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true" />
+			</sec:ifAnyGranted>
+			
+			<!-- CADASTRO DE MEDICO -->
+			<sec:ifAnyGranted roles="MEDICO_ACESSAR, ADMIN">
+			 <p:menuitem value="Médico" action="#{medicoBeanView.redirecionarFindEntidade}"
+				 icon="pi pi-save" immediate="true" ajax="true" />
+			</sec:ifAnyGranted>
+			
+			<!-- CADASTRO DE PACIENTE -->
+			<sec:ifAnyGranted roles="PACIENTE_ACESSAR, ADMIN">
+			 <p:menuitem value="Paciente" action="#{pacienteBeanView.redirecionarFindEntidade}"
+				 icon="pi pi-save" immediate="true" ajax="true" />	
+			</sec:ifAnyGranted>
+			 <p:separator/>
+
+			<!-- CADASTRO DE CIDADE -->
+			 <sec:ifAnyGranted roles="CIDADE_ACESSAR, ADMIN">
+				 <p:menuitem value="Cidade" action="#{cidadeBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true" />
+			 </sec:ifAnyGranted>
+			
+			<!-- CADASTRO DE CONVENIO -->
+			<sec:ifAnyGranted roles="CONVENIO_ACESSAR, ADMIN">
+			     <p:menuitem value="Convênio" action="#{convenioBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true"  />
+			</sec:ifAnyGranted>
+			
+			<!-- CADASTRO DE DOENCA -->
+			<sec:ifAnyGranted roles="DOENCA_ACESSAR, ADMIN">
+				 <p:menuitem value="Doenças" action="#{doencaBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true"  />
+			</sec:ifAnyGranted>
+			
+			<!-- CADASTRO DE ESPECIALIDADE-->
+			<sec:ifAnyGranted roles="ESPECIALIDADE_ACESSAR, ADMIN">
+				 <p:menuitem value="Especialidades" action="#{especialidadeBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true"  />
+			 <p:separator/> 
+			</sec:ifAnyGranted>
+				 
+
+			 <!-- CADASTRO DE DOENCA -->
+			<sec:ifAnyGranted roles="DOENCA_ACESSAR, ADMIN">
+				 <p:menuitem value="Fornecedor" action="#{fornecedorBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true"  />
+					 </sec:ifAnyGranted>
+			
+			<!-- CADASTRO DE MATERIAL -->
+			<sec:ifAnyGranted roles="MATERIAL_ACESSAR, ADMIN">
+				 <p:menuitem value="Material" action="#{materialBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true"  />
+			 <p:separator/>	 
+			 </sec:ifAnyGranted>
+			
+			 <!-- CADASTRO DE TIPO DE CONSULTA -->
+			<sec:ifAnyGranted roles="TIPO_CONSULTA_ACESSAR, ADMIN">
+			    <p:menuitem value="Tipo de ConsultaX" action="#{tipoConsultaBeanView.redirecionarFindEntidade}"
+				 	icon="pi pi-save" immediate="true" ajax="true"  />
+			</sec:ifAnyGranted>
+			
+			 <!-- CADASTRO DE TIPO DE PAGAMENTO -->
+			<sec:ifAnyGranted roles="TIPO_PAGAMENTO_ACESSAR, ADMIN">
+			    <p:menuitem value="Tipo de PagamentoX" action="#{tipoPagamentoBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="false"  />
+		    </sec:ifAnyGranted>
+			
+			 <!-- CADASTRO DE UNIDADE DE MEDIDA -->
+			<sec:ifAnyGranted roles="UNIDADE_MEDIDA_ACESSAR, ADMIN">
+			    <p:menuitem value="Unidade de Medida" action="#{unidadeDeMedidaBeanView.redirecionarFindEntidade}"
+					 icon="pi pi-save" immediate="true" ajax="true"  />
+			</sec:ifAnyGranted>
+
+	 </p:submenu>
+   </sec:ifAnyGranted>
+</p:menu>
+						
+	<!--  <h:graphicImage library="img" name="menuT.png"
+			styleClass="bordaimagem" id="iconemenu">
+		  </h:graphicImage> -->
+
+</span> 
+					
+				</div>
+
+				<!-- Corpo do Programa -->
+				<div id="corpo" class="corpo">
+					<ui:insert name="corpo" />
+				</div>
+
+				<!--Aba Alterar Senha -->
+				<div id="menupop">
+
+					<sec:ifAnyGranted roles="MENSAGENS_ENVIAR_ACESSAR, ADMIN">
+						<p:commandLink actionListener="#{mensagemBeanView.novo}"
+							onsuccess="enviarMsgDialog.show();" value="Mensagem"
+							immediate="true" style="display:block; font-size:small"
+							id="enviarMensagem" ajax="true" process="@this">
+							<p:ajax immediate="true" listener="#{mensagemBeanView.novo}" />
+
+						</p:commandLink>
+					</sec:ifAnyGranted>
+
+					<a href='#' onclick="alterarSenhaDialog.show();"
+						style="display: block;" id="alterarSenha">
+						 <span
+							style="display: block;" id="spanAlterarSenha">Alterar Senha
+						</span>
+					</a>
+				</div>
+
+			<!-- <div id="barramenu" style="background-color: #d7e7f9; width: 110px">
+
+					<p:tieredMenu id="menuEsquerdo" autoDisplay="true"
+						style="width:110px; border:none;
+					background: none; color:#d7e7f9;">
+
+						Menu Inicio Barra Esquerda
+						<p:menuitem value="Inicio" id="menuinicio"
+							onclick="redirecionarPagina('#{request.contextPath}', '/restrito/principal')"
+							ajax="true" />
+
+						MENU DE CADASTROS
+						<sec:ifAnyGranted roles="CADASTRO_ACESSAR, ADMIN">
+
+							<p:submenu id="subMenuCadastro" label="Cadastros">
+
+								Restrigindo o Cad Cidade
+								<sec:ifAnyGranted roles="CIDADE_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuCidade" value="Cidade" immediate="true"
+										action="#{cidadeBeanView.redirecionarFindEntidade}"
+										ajax="true">
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+								MENU DE COLABORADORES
+								<sec:ifAnyGranted roles="CADASTRO_COLABORADORES_ACESSAR, ADMIN">
+									<p:submenu id="subMenuCadastroColaboradores"
+										label="Colaboradores">
+
+										CADASTRO DE ATENDENTE
+										<sec:ifAnyGranted roles="ATENDENTE_ACESSAR, ADMIN">
+
+											<p:menuitem id="menuAtendente" value="Atendente"
+												immediate="true"
+												action="#{atendenteBeanView.redirecionarFindEntidade}"
+												ajax="true">
+											</p:menuitem>
+
+										</sec:ifAnyGranted>
+
+
+										CADASTRO DE MÉDICO
+										<sec:ifAnyGranted roles="MEDICO_ACESSAR, ADMIN">
+
+											<p:menuitem id="menuMedico" value="Médico" immediate="true"
+												action="#{medicoBeanView.redirecionarFindEntidade}"
+												ajax="true">
+											</p:menuitem>
+
+										</sec:ifAnyGranted>
+
+										RESTRIGINDO O CADASTRO DE ESTOQUISTA
+										<sec:ifAnyGranted roles="ESTOQUISTA_ACESSAR, ADMIN">
+
+											<p:menuitem id="menuEstoquista" value="Estoquista"
+												immediate="true"
+												action="#{estoquistaBeanView.redirecionarFindEntidade}"
+												ajax="true">
+											</p:menuitem>
+
+										</sec:ifAnyGranted>
+									</p:submenu>
+								</sec:ifAnyGranted>
+
+								RESTRIGINDO O CADASTRO DE CONVÊNIO
+								<sec:ifAnyGranted roles="CONVENIO_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuConvenio" value="Convênio" immediate="true"
+										action="#{convenioBeanView.redirecionarFindEntidade}"
+										ajax="true">
+
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+
+								Restrigindo o Cadastro de Doenças
+								<sec:ifAnyGranted roles="DOENCAS_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuDoenças" value="Doenças" immediate="true"
+										action="#{doencaBeanView.redirecionarFindEntidade}"
+										ajax="true">
+
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+
+								Restrigindo o Cadastro de Especialidade
+								<sec:ifAnyGranted roles="ESPECIALIDADE_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuEspecialidades"
+										value="Especialidades Médicas" immediate="true"
+										action="#{especialidadeBeanView.redirecionarFindEntidade}"
+										ajax="true">
+
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+
+								MENU CADASTRO FINANCEIRO
+								<sec:ifAnyGranted roles="CADASTRO_FINANCEIRO_ACESSAR, ADMIN">
+									<p:submenu id="subMenuCadastroFinanceiro" label="Financeiro">
+										Restrigindo o Cadastro de Tipo de pagamento
+										<sec:ifAnyGranted roles="TIPO_PAGAMENTO_ACESSAR, ADMIN">
+
+											<p:menuitem id="menuTipoPagamento" value="Tipo de Pagamento"
+												immediate="true"
+												action="#{tipoPagamentoBeanView.redirecionarFindEntidade}"
+												ajax="true">
+											</p:menuitem>
+
+										</sec:ifAnyGranted>
+									</p:submenu>
+								</sec:ifAnyGranted>
+								Restrigindo o Cadastro de Fornecedor
+								<sec:ifAnyGranted roles="FORNECEDOR_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuFornecedor" value="Fornecedor"
+										immediate="true"
+										action="#{fornecedorBeanView.redirecionarFindEntidade}"
+										ajax="true">
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+
+								Restrigindo o Cadastro de Material
+								<sec:ifAnyGranted roles="MATERIAL_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuMaterial" value="Material" immediate="true"
+										action="#{materialBeanView.redirecionarFindEntidade}"
+										ajax="true">
+
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+								Restrigindo o Cadastro de Paciente
+								<sec:ifAnyGranted roles="PACIENTE_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuPaciente" value="Paciente" immediate="true"
+										action="#{pacienteBeanView.redirecionarFindEntidade}"
+										ajax="true">
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+
+
+
+
+
+								Restrigindo o Cadastro de Tipo de Consulta
+								<sec:ifAnyGranted roles="TIPO_CONSULTA_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuTipoConsulta" value="Tipo de Consulta"
+										immediate="true"
+										action="#{tipoConsultaBeanView.redirecionarFindEntidade}"
+										ajax="true">
+
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+
+								Restrigindo o Cadastro de Unidade Medida
+								<sec:ifAnyGranted roles="UNIDADE_MEDIDA_ACESSAR, ADMIN">
+
+									<p:menuitem id="menuUnidadeMedida" value="Unidade de Medida"
+										immediate="true"
+										action="#{unidadeDeMedidaBeanView.redirecionarFindEntidade}"
+										ajax="true">
+
+									</p:menuitem>
+
+								</sec:ifAnyGranted>
+
+
+
+							</p:submenu>
+
+						</sec:ifAnyGranted>
+						MENU DE AGENDAMENTO
+						<sec:ifAnyGranted roles="AGENDAR_CONSULTA_ACESSAR, ADMIN">
+							<p:submenu id="subMenuAgendarConsulta" label="Agendar">
+
+								<sec:ifAnyGranted roles="AGENDAR_CONSULTA_ACESSAR, ADMIN">
+									<p:menuitem id="AgendarConsulta" value="Consulta"
+										immediate="true"
+										action="#{agendarConsultaBeanView.redirecionarFindEntidade}"
+										ajax="true">
+									</p:menuitem>
+								</sec:ifAnyGranted>
+
+
+								<sec:ifAnyGranted roles="AGENDAR_EXAME_ACESSAR, ADMIN">
+									<p:menuitem id="AgendarExame" value="Exame" immediate="true"
+										action="#{agendarExameBeanView.redirecionarFindEntidade}"
+										ajax="true">
+									</p:menuitem>
+								</sec:ifAnyGranted>
+
+							</p:submenu>
+
+						</sec:ifAnyGranted>
+
+						Menu Sair Logout
+						<p:menuitem onclick="javascript:logout('#{request.contextPath}');"
+							value="Sair" id="menusair" ajax="true" />
+					</p:tieredMenu>
+				</div> -->
+
+
+			</div>
+
+
+
+			<p:dialog widgetVar="enviarMsgDialog" id="alterarMsgDialog"
+				width="800" modal="true" resizable="false" height="360"
+				header="Enviar mensagem" appendToBody="false" dynamic="true">
+				<ui:include src="/cadastro/dialog_enviar_msg.xhtml" />
+
+			</p:dialog>
+
+			<!-- Chama Tela de Alterar Senha (menupop) -->
+			<p:dialog widgetVar="alterarSenhaDialog" id="alterarSenhaDialog"
+				width="240px" modal="true" resizable="false" height="170"
+				header="Alterar Senha" dynamic="true" appendToBody="false">
+				<ui:include src="/cadastro/dialog_alterar_senha.xhtml"></ui:include>
+
+			</p:dialog>
+
+
+
+		</h:body>
+ </h:form>
+	<script type="text/javascript" charset="UTF-8">
+		carregarIdElementosPagina();
+	</script>
+
+</sec:isAuthenticated>
+
+
+
+
+</html>

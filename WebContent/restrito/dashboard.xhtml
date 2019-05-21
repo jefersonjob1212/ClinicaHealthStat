@@ -67,7 +67,7 @@
 								</div> 
 			<p:schedule value="#{scheduleBean.model}" widgetVar="scheduleExemplo" editable="true"
 				id="scheduleExemplo" timeZone="GMT-3" locale="pt_BR" tooltip="true"
-				 timeFormat="HH:mm" axisFormat="H:mm" firstHour="8" 
+				 timeFormat="HH:mm" axisFormat="H:mm"  
 				minTime="8:00" maxTime="19:00" style="width: 1200px; height: 700px;">
 				
 				<!-- DATA SELECIONADA -->
@@ -102,6 +102,11 @@
 					<p:selectOneMenu value="scheduleBean.evento.paciente">
 					
 					<f:selectItems value="#{scheduleBean.pacientes}"/>
+					</p:selectOneMenu>
+					<p:outputLabel value="Medico"/>
+					<p:selectOneMenu value="scheduleBean.evento.medico">
+					
+					<f:selectItems value="#{scheduleBean.medicos}"/>
 											
 					</p:selectOneMenu>
 					

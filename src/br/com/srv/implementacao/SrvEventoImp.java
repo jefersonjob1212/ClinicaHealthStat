@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import br.com.repository.interfaces.RepositoryEvento;
-import br.com.srv.interfaces.SrvAgenda;
 import br.com.srv.interfaces.SrvEvento;
 
 @Service
@@ -16,5 +15,5 @@ public class SrvEventoImp implements SrvEvento{
 	
 	
 	@Resource 
-	private RepositoryEvento repositoryAgenda;
+	private RepositoryEvento repositoryEvento;
 }

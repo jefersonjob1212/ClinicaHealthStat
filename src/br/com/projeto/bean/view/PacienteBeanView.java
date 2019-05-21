@@ -88,6 +88,7 @@ public class PacienteBeanView extends BeanManagedViewAbstract {
 			objetoSelecionado.getPessoa().setBairro(gson.getBairro());
 			objetoSelecionado.getPessoa().setIbge(gson.getIbge());
 			objetoSelecionado.getPessoa().setComplemento(gson.getComplemento());
+			objetoSelecionado.getPessoa().setUf(gson.getUf());
 			System.out.println("CEP Saindo " +jsonCEP);
 			
 		} catch (Exception e) {

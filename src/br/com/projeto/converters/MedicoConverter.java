@@ -7,35 +7,31 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import br.com.projeto.geral.controller.PacienteController;
-import br.com.projeto.model.classes.Paciente;
-@FacesConverter(forClass = Paciente.class, value="pacienteConverter")
-public class PacienteConverter  implements Converter, Serializable{
+import br.com.projeto.geral.controller.MedicoController;
+import br.com.projeto.model.classes.Medico;
+@FacesConverter(forClass = Medico.class, value="edicoConverter")
+public class MedicoConverter  implements Converter, Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String value) {
 	
-	//	if (value != null) {
-			//Long codigo = new Long(value); 
 			try {
-				return new PacienteController().findByPorId(Paciente.class, Integer.valueOf(value).longValue());
+				return new MedicoController().findByPorId(Medico.class, Integer.valueOf(value).longValue());
 			} catch (Exception e) {
-				return new Paciente();
+				return new Medico();
 			}
 		}
-//	}
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
 		 try {
-	            return String.valueOf(((Paciente) value).getIdPaciente());
+	            return String.valueOf(((Medico) value).getIdMedico());
 	        } catch (Exception e) {
 	            return "";
 	        }
 	    }
-		//return String.valueOf(especialidade.getIdEspecialidade().longValue());
 
 	}
 

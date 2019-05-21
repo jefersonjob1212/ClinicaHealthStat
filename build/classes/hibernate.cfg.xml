@@ -39,7 +39,6 @@
 		<mapping class="br.com.projeto.model.classes.Convenio" />
 		<mapping class="br.com.projeto.model.classes.Fornecedor" />
 		<mapping class="br.com.projeto.model.classes.Estoquista" />
-		<mapping class="br.com.projeto.model.classes.Agenda" />
 		<mapping class="br.com.projeto.model.classes.Evento" />
 		
 		<listener class="org.hibernate.envers.event.AuditEventListener"

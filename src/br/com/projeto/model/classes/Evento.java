@@ -1,9 +1,7 @@
 package br.com.projeto.model.classes;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -44,8 +42,13 @@ public class Evento  implements Serializable {
 	    @ManyToOne(cascade = CascadeType.ALL)
 		@JoinColumn()
 	    private Paciente paciente;
+
+	    @ManyToOne(cascade = CascadeType.ALL)
+		@JoinColumn()
+	    private Medico medico;
 	    
-	    public Evento() {
+
+		public Evento() {
 	        this.tipoEvento = TipoEvento.CONSULTA;
 	        this.titulo = "";
 	        this.diaInteiro = false;
@@ -108,6 +111,13 @@ public class Evento  implements Serializable {
 	        this.tipoEvento = tipoEvento;
 	    }
 
+	    public Medico getMedico() {
+	    	return medico;
+	    }
+	    
+	    public void setMedico(Medico medico) {
+	    	this.medico = medico;
+	    }
 	    @Override
 	    public int hashCode() {
 	        int hash = 3;

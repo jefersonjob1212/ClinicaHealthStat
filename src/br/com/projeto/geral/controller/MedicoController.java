@@ -1,6 +1,10 @@
 package br.com.projeto.geral.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
+import javax.faces.model.SelectItem;
 
 import org.springframework.stereotype.Controller;
 
@@ -22,6 +26,15 @@ public class MedicoController extends ImplementacaoCrud<Medico> implements
 	@Resource
 	private RepositoryMedico repositoryMedico;
 	
-	
+	public List<SelectItem> getListMedicos() throws Exception {
+		List<SelectItem> list = new ArrayList<SelectItem>();
+
+		List<Medico> medicos = super.findListByQueryDinamica(" from Medico");
+
+		for (Medico medico : medicos) {
+			list.add(new SelectItem(medico, medico.getPessoa().getPessoaNome()));
+		}
+		return list;
+	}
 	
 }

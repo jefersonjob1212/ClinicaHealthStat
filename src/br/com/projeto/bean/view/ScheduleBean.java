@@ -14,7 +14,6 @@ import org.joda.time.DateTime;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
@@ -24,10 +23,10 @@ import org.springframework.stereotype.Controller;
 
 import br.com.projeto.enums.TipoEvento;
 import br.com.projeto.geral.controller.EventoController;
+import br.com.projeto.geral.controller.MedicoController;
 import br.com.projeto.geral.controller.PacienteController;
 import br.com.projeto.model.classes.CustomScheduleEvent;
 import br.com.projeto.model.classes.Evento;
-import br.com.projeto.model.classes.Paciente;
 
 @ManagedBean( name= "scheduleBean")
 @Controller
@@ -41,13 +40,16 @@ public class ScheduleBean {
    
     Date dataAtual = new Date();
     
-    List<Paciente> listaPacientes = new ArrayList<Paciente>();
+    //List<Paciente> listaPacientes = new ArrayList<Paciente>();
     
     @Autowired
     private EventoController eventoController;
     
     @Autowired
     private PacienteController pacienteController;
+    
+    @Autowired
+    private MedicoController medicoController;
 
     public ScheduleBean() {
         event = new CustomScheduleEvent();
@@ -60,10 +62,12 @@ public class ScheduleBean {
 		return pacienteController.getListPacientes();
 	}
     
+	public List<SelectItem> getMedicos() throws Exception{
+		return medicoController.getListMedicos();
+	}
 
     @PostConstruct
     public void init() throws Exception {
-    	//lista de pacientes
     	
     	if (this.model != null) {
         	List<Evento> eventos = this.eventoController.listarEventos();
@@ -109,15 +113,15 @@ public class ScheduleBean {
         								this.evento);
         if (evento.getId() == null) {
             model.addEvent(newEvent);
-            eventoController.merge(evento);
+          //  eventoController.merge(evento);
         } else {
             newEvent.setId(event.getId());
             model.updateEvent(newEvent);
-            eventoController.merge(evento);
+          //  eventoController.merge(evento);
         }
-       // eventoController.merge(evento);
+       eventoController.merge(evento);
        // eventoDAO.salvar(evento);
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento Salvo", "Agendamento para: "+evento.getTitulo());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento Salvo", "Agendamento para:  "+evento.getTitulo());
         addMessage(message);
     }
 

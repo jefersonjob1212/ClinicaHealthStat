@@ -29,7 +29,6 @@ import br.com.projeto.carregamento.lazy.CarregamentoLazyListForObjeto;
 import br.com.projeto.geral.controller.CidadeController;
 import br.com.projeto.geral.controller.EspecialidadeController;
 import br.com.projeto.geral.controller.MedicoController;
-import br.com.projeto.geral.controller.PacienteController;
 import br.com.projeto.model.classes.Especialidade;
 import br.com.projeto.model.classes.Medico;
 import br.com.projeto.model.classes.Pessoa;

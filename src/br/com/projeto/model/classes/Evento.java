@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
+import br.com.projeto.carregamento.lazy.CarregamentoLazyListForObjeto;
 import br.com.projeto.enums.TipoEvento;
 
 /**
@@ -34,12 +35,15 @@ public class Evento  implements Serializable {
 		@GeneratedValue(strategy = GenerationType.SEQUENCE,	generator = "evento_seq")
 	    private Long id;
 	    private String titulo;
+	    
 	    private Date dataInicio;
 	    private Date dataFim;
 	    private boolean diaInteiro;
 	    private TipoEvento tipoEvento;
-	    
-	    @ManyToOne(cascade = CascadeType.ALL)
+	   
+	   
+
+		@ManyToOne(cascade = CascadeType.ALL)
 		@JoinColumn()
 	    private Paciente paciente;
 
@@ -83,8 +87,12 @@ public class Evento  implements Serializable {
 	        return dataInicio;
 	    }
 
-	    public void setDataInicio(Date dataInicio) {
-	        this.dataInicio = dataInicio;
+	    public void setDataInicio(Date dataInicio)  {
+	    	//Calendar calendar = java.util.Calendar.getInstance() ;
+		  //  calendar.set(Calendar.HOUR_OF_DAY, 8) ;
+	    	//calendar.set(Calendar);
+	    	
+	    	this.dataInicio = dataInicio;
 	    }
 
 	    public Date getDataFim() {

@@ -40,15 +40,21 @@
 				}
 			}
 			//]]>
+			
+			
 		</script>
+		
 		<style type="text/css">
 .main-content {
 	padding: 0;
 }
 
-.value {
-	width: 1200px;
+.inputAgenda{
+width :218px;
 }
+
+
+
 </style>
 	</ui:define>
 
@@ -67,7 +73,7 @@
 								</div> 
 			<p:schedule value="#{scheduleBean.model}" widgetVar="scheduleExemplo" editable="true"
 				id="scheduleExemplo" timeZone="GMT-3" locale="pt_BR" tooltip="true"
-				 timeFormat="HH:mm" axisFormat="H:mm"  
+				 timeFormat="HH:mm" axisFormat="H:mm" 
 				minTime="8:00" maxTime="19:00" style="width: 1200px; height: 700px;">
 				
 				<!-- DATA SELECIONADA -->
@@ -92,28 +98,32 @@
 			<p:dialog widgetVar="eventDialog" header="Evento" responsive="true" resizable="false" closable="true" showEffect="true"
 				modal="true" style="width: 900px !important">
 				<p:panelGrid columns="2" id="panelGridEvento" 
-					styleClass="ui-panelgrid-blank" columnClasses="ui-grid-col-12">
+					styleClass="ui-panelgrid-blank" columnClasses="
+												   ui-g-12 ui-md-6 ui-lg-2,
+												   ui-g-12 ui-md-6 ui-lg-4">
 					
 					<p:outputLabel value="Titulo:" />
 					<p:inputText value="#{scheduleBean.evento.titulo}"
-						placeholder="Título" size="30" />
+						placeholder="Título" size="30"/>
+			
 					
 					<p:outputLabel value="Paciente"/>
-					<p:selectOneMenu value="scheduleBean.evento.paciente">
-					
+					<p:selectOneMenu value="scheduleBean.evento.paciente" styleClass="inputAgenda">
+					 <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 					<f:selectItems value="#{scheduleBean.pacientes}"/>
 					</p:selectOneMenu>
-					<p:outputLabel value="Medico"/>
-					<p:selectOneMenu value="scheduleBean.evento.medico">
 					
+					<p:outputLabel value="Medico"/>
+					<p:selectOneMenu value="scheduleBean.evento.medico" styleClass="inputAgenda" >
+					 <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 					<f:selectItems value="#{scheduleBean.medicos}"/>
 											
 					</p:selectOneMenu>
 					
 					 <p:outputLabel value="Agendamento:" />	
-					<p:calendar pattern="dd/MM/yyyy HH:mm" mindate="#{scheduleBean.dataAtual}" 
-						showTodayButton="true" showButtonPanel="true"
-						value="#{scheduleBean.evento.dataInicio}"
+					<p:calendar pattern="dd/MM/yyyy HH:mm" mindate="#{scheduleBean.dataAtual}"  locale="pt_BR" 
+						showButtonPanel="true" maxHour="17" timeZone="GMT-3" minHour="8"
+						value="#{scheduleBean.evento.dataInicio}" size="30" mode="inline"
 						placeholder="Data Início">
 					</p:calendar>
 					
@@ -129,12 +139,13 @@
 						offLabel="Não" label="Dia Inteiro" /> -->
 				  
 				   <p:outputLabel value="Tipo:" />	
-					<p:selectOneRadio value="#{scheduleBean.evento.tipoEvento}">
+					<p:selectOneMenu value="#{scheduleBean.evento.tipoEvento}" styleClass="inputAgenda" >
 						<f:selectItems value="#{scheduleBean.tiposEventos}"
 							var="tipoEvento" itemLabel="#{tipoEvento.descricao}"
 							itemValue="#{tipoEvento}" />
-					</p:selectOneRadio>
+					</p:selectOneMenu>
 				</p:panelGrid>                     
+				
 				<f:facet name="footer">
 					<div align="center">
 					<p:commandButton value="Fechar"

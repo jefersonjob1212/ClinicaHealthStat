@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import br.com.projeto.carregamento.lazy.CarregamentoLazyListForObjeto;
 import br.com.projeto.enums.TipoEvento;
 import br.com.projeto.geral.controller.EventoController;
 import br.com.projeto.geral.controller.MedicoController;
@@ -38,11 +40,15 @@ public class ScheduleBean {
     private ScheduleEvent event;
     private List<ScheduleEvent> scheduleEvents;
    
+   
+    
     Date dataAtual = new Date();
     
     //List<Paciente> listaPacientes = new ArrayList<Paciente>();
     
-    @Autowired
+
+
+	@Autowired
     private EventoController eventoController;
     
     @Autowired
@@ -113,11 +119,11 @@ public class ScheduleBean {
         								this.evento);
         if (evento.getId() == null) {
             model.addEvent(newEvent);
-          //  eventoController.merge(evento);
+          eventoController.persist(evento);
         } else {
             newEvent.setId(event.getId());
             model.updateEvent(newEvent);
-          //  eventoController.merge(evento);
+           //eventoController.merge(evento);
         }
        eventoController.merge(evento);
        // eventoDAO.salvar(evento);
@@ -173,13 +179,15 @@ public class ScheduleBean {
 		this.scheduleEvents = scheduleEvents;
 	}
 
-	public Date getDataAtual() {
-		return dataAtual;
-	}
-
-	public void setDataAtual(Date dataAtual) {
-		this.dataAtual = dataAtual;
-	}
+	
+	  public Date getDataAtual() { return dataAtual; }
+	  
+	  public void setDataAtual(Date dataAtual) { 
+		  LocalDate localDate = new	  LocalDate();
+	   dataAtual = localDate.toDate();
+	  
+	  this.dataAtual = dataAtual; }
+	 
     
     
 }

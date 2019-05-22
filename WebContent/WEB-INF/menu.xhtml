@@ -24,7 +24,8 @@
 
 							<p:submenu id="pm_hierarchy_cadastros" label="Cadastros"
 								icon="fa fa-plus-circle">
-								<p:submenu id="submenu_colaboradores" label="Colaboradores" icon="fa fa-group">
+								<p:submenu id="submenu_colaboradores" label="Colaboradores"
+									icon="fa fa-group">
 									<!-- <p:menuitem id="item_menu_atendente" value="Atendente"  icon="fa fa-sign-in" outcome="/cadastro/findAtendente"/> -->
 
 									<sec:ifAnyGranted roles="ATENDENTE_ACESSAR, ADMIN">
@@ -45,13 +46,9 @@
 											action="#{medicoBeanView.redirecionarFindEntidade}" />
 									</sec:ifAnyGranted>
 
-									<sec:ifAnyGranted roles="PACIENTE_ACESSAR, ADMIN">
-										<p:menuitem id="item_menu_paciente" value="Paciente"
-											icon="fa fa-user-o"
-											action="#{pacienteBeanView.redirecionarFindEntidade}" />
-									</sec:ifAnyGranted>
+
 								</p:submenu>
-								
+
 								<sec:ifAnyGranted roles="CIDADE_ACESSAR, ADMIN">
 									<p:menuitem id="item_menu_cidade" value="Cidade"
 										icon="fa fa-home"
@@ -63,7 +60,7 @@
 										icon="fa fa-medkit"
 										action="#{convenioBeanView.redirecionarFindEntidade}" />
 								</sec:ifAnyGranted>
-								
+
 								<sec:ifAnyGranted roles="DOENCA_ACESSAR, ADMIN">
 									<p:menuitem id="item_menu_doencas" value="Doença"
 										icon="fa fa-stethoscope"
@@ -81,21 +78,27 @@
 										icon="fa fa-building"
 										action="#{fornecedorBeanView.redirecionarFindEntidade}" />
 								</sec:ifAnyGranted>
-								
+
 								<sec:ifAnyGranted roles="MATERIAL_ACESSAR, ADMIN">
 									<p:menuitem id="item_menu_material" value="Material"
 										icon="fa fa-glass"
 										action="#{materialBeanView.redirecionarFindEntidade}" />
 								</sec:ifAnyGranted>
-								
+
+								<sec:ifAnyGranted roles="PACIENTE_ACESSAR, ADMIN">
+									<p:menuitem id="item_menu_paciente" value="Paciente"
+										icon="fa fa-user-o"
+										action="#{pacienteBeanView.redirecionarFindEntidade}" />
+								</sec:ifAnyGranted>
+
 								<sec:ifAnyGranted roles="UNIDADE_DE_MEDIDA_ACESSAR, ADMIN">
 									<p:menuitem id="item_menu_unidade_de_medida"
 										value="Unidade de Medida" icon="fa fa-hand-lizard-o"
 										action="#{unidadeDeMedidaBeanView.redirecionarFindEntidade}" />
 								</sec:ifAnyGranted>
-								
-								
-								
+
+
+
 							</p:submenu>
 
 
@@ -201,7 +204,7 @@
 
 
 
-							<p:submenu id="pm_components" label="Components"
+							<!-- <p:submenu id="pm_components" label="Components"
 								icon="fa fa-sitemap">
 								<p:menuitem id="pm_sample" value="Sample Page"
 									icon="fa fa-columns" outcome="/sample" />
@@ -223,11 +226,11 @@
 									icon="fa fa-arrow-circle-o-up" outcome="/file" />
 								<p:menuitem id="pm_misc" value="Misc" icon="fa fa-user-secret"
 									outcome="/misc" />
-							</p:submenu>
+							</p:submenu> -->
 
-
+							<!-- 
 							<p:menuitem id="pm_doc" value="Documentation" icon="fa fa-book"
-								outcome="/docs" />
+								outcome="/docs" /> -->
 						</pv:menu>
 					</h:form>
 				</div>

@@ -1,18 +1,18 @@
 /*PLACEHOLDER DOS INPUTS*/
 ::-webkit-input-placeholder {
-	color: red;
+	color: gray;
 }
 
 :-moz-placeholder { /* Firefox 18- */
-	color: red;
+	color: gray;
 }
 
 ::-moz-placeholder { /* Firefox 19+ */
-	color: red;
+	color: gray;
 }
 
 :-ms-input-placeholder {
-	color: red;
+	color: gray;
 }
 
 /*RESPONSIVIDADE COMEÇO */

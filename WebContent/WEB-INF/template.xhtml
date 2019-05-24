@@ -23,8 +23,11 @@
     
     </h:head>
     <h:body>
-       
-        <div class="layout-wrapper #{guestPreferences.slimMenu ? 'layout-menu-slim' : (guestPreferences.overlayMenu ? 'layout-menu-overlay' : 'layout-menu-static')}">
+       	 <!-- Menu personalizavel -->
+       	 <!-- layout-wrapper layout-menu-slim #{guestPreferences.slimMenu ? 
+       	 	 'layout-menu-slim' : (guestPreferences.overlayMenu ? 'layout-menu-overlay' : 'layout-menu-static')} -->
+       	 	 
+        <div class="layout-wrapper layout-menu-slim">
             <ui:include src="./topbar.xhtml" />
 	<h:form id="formTemplate">
          <!-- CHAMANDO estiloTemplate.css aplicando em todas as telas  -->   

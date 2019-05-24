@@ -16,7 +16,6 @@ import javax.persistence.Table;
 
 import org.hibernate.envers.Audited;
 
-import br.com.projeto.carregamento.lazy.CarregamentoLazyListForObjeto;
 import br.com.projeto.enums.TipoEvento;
 
 /**
@@ -40,6 +39,7 @@ public class Evento  implements Serializable {
 	    private Date dataFim;
 	    private boolean diaInteiro;
 	    private TipoEvento tipoEvento;
+	    private String descricao;
 	   
 	   
 
@@ -58,13 +58,26 @@ public class Evento  implements Serializable {
 	        this.diaInteiro = false;
 	    }
 
-	    public Evento(Long id, String titulo, Date dataInicio, Date dataFim, boolean diaInteiro, TipoEvento tipoEvento) {
+	    public Evento(Long id,
+	    		String titulo, 
+	    		Date dataInicio, 
+	    		Date dataFim, 
+	    		boolean diaInteiro, 
+	    		TipoEvento tipoEvento,
+	    		String descricao,
+	    		Paciente paciente,
+	    		Medico medico)
+	    {
+	    	
 	        this.id = id;
 	        this.titulo = titulo;
 	        this.dataInicio = dataInicio;
 	        this.dataFim = dataFim;
 	        this.diaInteiro = diaInteiro;
 	        this.tipoEvento = tipoEvento;
+	        this.setDescricao(descricao);
+	        this.paciente = paciente;
+	        this.medico =  medico;
 	    }
 
 	    public Long getId() {
@@ -157,6 +170,14 @@ public class Evento  implements Serializable {
 
 		public void setPaciente(Paciente paciente) {
 			this.paciente = paciente;
+		}
+
+		public String getDescricao() {
+			return descricao;
+		}
+
+		public void setDescricao(String descricao) {
+			this.descricao = descricao;
 		}
 
 		

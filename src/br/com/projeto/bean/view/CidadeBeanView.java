@@ -46,7 +46,6 @@ public class CidadeBeanView extends BeanManagedViewAbstract {
 	}
 	
 	public List<SelectItem> getCidades() throws Exception{
-		//System.out.println("Cidades Lista Chamado");
 		return cidadeController.getListCidades();
 	}
 

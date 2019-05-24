@@ -1,4 +1,3 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -49,9 +48,33 @@ text-decoration:underline;
 			placeholder="Type your search here" id="topbar-search" />
 
 		<ul id="topbar-menu" class="fadeInDown animated">
-			<li><a href="#">
-			<!--  <i	class="topbar-icon material-icons animated swing fa fa-fw fa-envelope-o"></i> -->
-					<span class="topbar-item-name" style="font-weight: bold; font-size: 15px; margin-left: auto; margin-right: auto">Ultimo Acesso do Usuário:
+			
+
+			<li><a href="#"> <i class="topbar-icon fa fa-fw fa-user"></i>
+					<span class="topbar-item-name" style=" font-size: 15px;" >Ajustes</span>
+			</a>
+				<ul>
+				<li role="menuitem">
+					<a 
+						href="//localhost:8080/paradise-theme-clinica/cadastro/dialog_alterar_senha.jsf?faces-redirect=true">
+							<i class="fa fa-fw fa-user"></i>
+							 <span style="font-size: 15px;" >Alterar Senha</span>
+					</a>
+				</li>
+				
+				
+			
+				</ul></li>
+			<li><a href="#"
+				onclick="javascript:logout('#{request.contextPath}')"> <i
+					class="fa fa-fw fa-sign-out"></i> <span class="topbar-item-name" style="font-size: 15px;font-weight: bold; font-size: 15px;">Logout</span>
+					<!--  <span class="topbar-badge animated rubberBand">2</span> -->
+			</a>
+				
+				 </li>
+				
+				<li><a href="#">
+					<span class="topbar-item-name" style="font-weight: bold; font-size: 15px; margin-left: auto; margin-right: auto; text-align: center;">Ultimo Acesso do Usuário:
 					<h:outputText
 							value="#{entidadeBeanView.ultimoAcesso}"
 							id="ultimoAcesso">
@@ -59,123 +82,10 @@ text-decoration:underline;
 								dateStyle="full" timeStyle="full" timeZone="GMT-03:00" />
 						</h:outputText>
 				</span> <!--     <span class="topbar-badge animated rubberBand">4</span> -->
-			</a>
-				<ul>
-					
-					<!--   <li role="menuitem">
-	                        <a href="#">
-	                            <i class="fa fa-fw fa-user-secret"></i>
-	                            <span>Privacy</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#">
-	                            <i class="fa fa-fw fa-cog"></i>
-	                            <span>Settings</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#">
-	                            <i class="fa fa-fw fa-sign-out"></i>
-	                            <span>Logout</span>
-	                        </a>
-	                    </li> -->
-				</ul></li>
-
-			<li><a href="#"> <i class="topbar-icon fa fa-fw fa-user"></i>
-					<span class="topbar-item-name">Ajustes</span>
-			</a>
-				<ul>
-				<li role="menuitem"><a 
-						href="//localhost:8080/paradise-theme-clinica/cadastro/dialog_alterar_senha.jsf?faces-redirect=true">
-							<i class="fa fa-fw fa-user"></i> <span>Alterar Senha</span>
-					</a></li>
-				<li role="menuitem"><a
-						href="cadastro/dialog_alterar_senha.jsf?faces-redirect=true">
-							<i class="fa fa-fw fa-user"></i> <span>Temas</span>
-					</a></li>
-					<!-- <li role="menuitem">
-	                        <a href="#" class="topbar-message">
-	                            <p:graphicImage name="images/avatar1.png" library="paradise-layout" width="35"/>
-	                            <span>Give me a call</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#" class="topbar-message">
-	                            <p:graphicImage name="images/avatar2.png" library="paradise-layout" width="35"/>
-	                            <span>Reports attached</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#" class="topbar-message">
-	                            <p:graphicImage name="images/avatar3.png" library="paradise-layout" width="35"/>
-	                            <span>About your invoice</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#" class="topbar-message">
-	                            <p:graphicImage name="images/avatar2.png" library="paradise-layout" width="35"/>
-	                            <span>Meeting today</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#" class="topbar-message">
-	                            <p:graphicImage name="images/avatar4.png" library="paradise-layout" width="35"/>
-	                            <span>Out of office</span>
-	                        </a>
-	                    </li> -->
-				</ul></li>
-			<li><a href="#"
-				onclick="javascript:logout('#{request.contextPath}')"> <i
-					class="fa fa-fw fa-sign-out"></i> <span class="topbar-item-name">Logout</span>
-					<!--  <span class="topbar-badge animated rubberBand">2</span> -->
-			</a>
-				<ul>
-					<!-- <li role="menuitem">
-	                        <a href="#">
-	                            <i class="fa fa-fw fa-tasks"></i>
-	                            <span>Pending tasks</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#">
-	                            <i class="fa fa-fw fa-calendar-check-o"></i>
-	                            <span>Meeting today</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#">
-	                            <i class="fa fa-fw fa-download"></i>
-	                            <span>Download</span>
-	                        </a>
-	                    </li>
-	                    <li role="menuitem">
-	                        <a href="#">
-	                            <i class="fa fa-fw fa-plane"></i>
-	                            <span>Book flight</span>
-	                        </a>
-	                    </li> -->
-				</ul></li>
-			<li><a href="#"> <i class="topbar-icon fa fa-fw fa-cog"></i>
-					<span class="topbar-item-name">Settings</span>
-			</a>
-				<ul>
-					<li role="menuitem"><a href="#"> <i
-							class="fa fa-fw fa-paint-brush"></i> <span>Change Theme</span> <span
-							class="topbar-badge">1</span>
-					</a></li>
-					<li role="menuitem"><a href="#"> <i
-							class="fa fa-fw fa-star-o"></i> <span>Favorites</span>
-					</a></li>
-					<li role="menuitem"><a href="#"> <i
-							class="fa fa-fw fa-lock"></i> <span>Lock Screen</span> <span
-							class="topbar-badge">3</span>
-					</a></li>
-					<li role="menuitem"><a href="#"> <i
-							class="fa fa-fw fa-picture-o"></i> <span>Wallpaper</span>
-					</a></li>
-				</ul></li>
-		</ul>
+			    </a>
+			</li>
+				</ul>
+		
 	</div>
 
 </ui:composition>

@@ -32,7 +32,7 @@
 				<text><![CDATA[Relatório de Cidades]]></text>
 			</staticText>
 			<image>
-				<reportElement x="330" y="0" width="214" height="79" uuid="97296182-7087-44dd-9b39-f260c1e5f952"/>
+				<reportElement x="330" y="7" width="214" height="79" uuid="97296182-7087-44dd-9b39-f260c1e5f952"/>
 				<imageExpression><![CDATA[$P{REPORT_PARAMETERS_IMG} + "loginHealthStat.png"]]></imageExpression>
 			</image>
 			<textField pattern="yyyy/MM/dd HH:mm:ss" isBlankWhenNull="true">

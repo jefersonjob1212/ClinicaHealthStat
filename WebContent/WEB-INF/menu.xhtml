@@ -5,9 +5,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:sec="http://www.springframework.org/security/facelets/tags"
 	xmlns:pv="http://primefaces.org/paradise">
-
-	<div
-		class="layout-menu-wrapper #{guestPreferences.darkMenu ? 'layout-menu-dark' : null}">
+	
+	<!-- <div class="layout-menu-wrapper #{guestPreferences.darkMenu ? 'layout-menu-dark' : null}"> -->
+	
+	<div class="layout-menu-wrapper layout-menu-dark">
 		<div class="nano">
 			<div class="nano-content sidebar-scroll-content">
 				<div class="layout-menu-container">
@@ -19,14 +20,13 @@
 						</div>
 
 						<pv:menu>
-							<p:menuitem id="pm_dashboard" value="Dashboard" icon="fa fa-home"
+							<p:menuitem id="pm_dashboard" value="Pagina Inicial" icon="fa fa-home"
 								outcome="/restrito/dashboard" />
 
 							<p:submenu id="pm_hierarchy_cadastros" label="Cadastros"
 								icon="fa fa-plus-circle">
 								<p:submenu id="submenu_colaboradores" label="Colaboradores"
 									icon="fa fa-group">
-									<!-- <p:menuitem id="item_menu_atendente" value="Atendente"  icon="fa fa-sign-in" outcome="/cadastro/findAtendente"/> -->
 
 									<sec:ifAnyGranted roles="ATENDENTE_ACESSAR, ADMIN">
 										<p:menuitem value="Atendente"
@@ -102,7 +102,7 @@
 							</p:submenu>
 
 
-							<p:submenu id="pm_menu" label="Tipos de Menus" icon="fa fa-cog">
+							<!-- <p:submenu id="pm_menu" label="Tipos de Menus" icon="fa fa-cog">
 								<p:menuitem id="pm_static_menu" value="Static Menu"
 									icon="fa fa-bars"
 									actionListener="#{guestPreferences.setOverlayMenu(false)}"
@@ -123,7 +123,7 @@
 									icon="fa fa-moon-o"
 									actionListener="#{guestPreferences.setDarkMenu(true)}"
 									ajax="false" />
-							</p:submenu>
+							</p:submenu> -->
 
 							<p:submenu id="pm_hierarchy_temas" label="Alterar Tema"
 								icon="fa fa-dashboard">

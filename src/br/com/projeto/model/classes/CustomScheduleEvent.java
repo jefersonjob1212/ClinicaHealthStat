@@ -27,13 +27,14 @@ public class CustomScheduleEvent implements ScheduleEvent {
         this.data = data;
     }
 
-    public CustomScheduleEvent(String title, Date start, Date end, String styleClass, boolean allDay, Object data) {
+    public CustomScheduleEvent(String title, Date start, Date end, String styleClass, boolean allDay,String description ,Object data) {
         this.title = title;
         this.startDate = start;
         this.endDate = end;
         this.styleClass = styleClass;
         this.allDay = allDay;
         this.data = data;
+        this.description = description;
     }
 
     @Override

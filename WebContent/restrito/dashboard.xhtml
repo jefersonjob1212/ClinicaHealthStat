@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:util="http://java.sun.com/jsf/composite/componentes"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
@@ -9,153 +10,146 @@
 	<ui:define name="head">
 		<h:outputScript name="scripty.js" library="javascript"
 			id="jsScriptSistema" />
-		<script type="text/javascript">
-			//<![CDATA[
-			function skinBar() {
-				this.cfg.shadow = false;
-				this.cfg.title = '';
-				this.cfg.seriesColors = [ '#3984b8', '#7e8dcd' ];
-				this.cfg.grid = {
-					background : '#ffffff',
-					borderColor : '#ffffff',
-					gridLineColor : '#dee4e9',
-					shadow : false
-				};
-				this.cfg.axesDefaults = {
-					borderWidth : 0.1,
-					borderColor : 'dce2e7',
-					rendererOptions : {
-						textColor : '#757575'
-					}
-				};
-				this.cfg.seriesDefaults = {
-					shadow : false,
-					lineWidth : 1,
-					renderer : $.jqplot.BarRenderer,
-					markerOptions : {
-						shadow : false,
-						size : 7,
-						style : 'circle'
-					}
-				}
-			}
-			//]]>
-			
-			
-		</script>
-		
+
+
 		<style type="text/css">
 .main-content {
 	padding: 0;
 }
 
-.inputAgenda{
-width :218px;
+.inputAgenda {
+	width: 218px;
 }
 
-
-
+value {
+	width: 600px;
+}
 </style>
 	</ui:define>
 
 	<ui:define name="content">
-	 <h:outputStylesheet library="css" name="schedule.css"/>
-        <h:outputScript library="js" name="schedule.js"/>
-		<p:growl id="avisosGrowl" showDetail="true"  />
+		<!-- <h:outputStylesheet library="css" name="schedule.css"/>
+        <h:outputScript library="js" name="schedule.js"/> -->
+		<p:growl id="avisosGrowl" showDetail="true" />
 		<h:form>
-				<div align="center">
-								<br />
-								<p:outputLabel value="Agendamento de Consultas"
-									styleClass="estiloLabelCadastroIdentificacao" />
-								<br />
-								<br />
-								
-								</div> 
-			<p:schedule value="#{scheduleBean.model}" widgetVar="scheduleExemplo" editable="true"
-				id="scheduleExemplo" timeZone="GMT-3" locale="pt_BR" tooltip="true"
-				 timeFormat="HH:mm" axisFormat="H:mm" 
-				minTime="8:00" maxTime="19:00" style="width: 1200px; height: 700px;">
-				
-				<!-- DATA SELECIONADA -->
-				<p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}"
-					update="#{p:component('scheduleExemploForm')}"
-					oncomplete="PF('eventDialog').show();" />
-				
-				<!-- EVENTO SELECIONADO DO AGENDAMENTO -->
-				<p:ajax event="eventSelect" listener="#{scheduleBean.onEventSelect}"
-					update="#{p:component('scheduleExemploForm')}"
-					oncomplete="PF('eventDialog').show();" />
-					
-					 <p:ajax event="eventMove" listener="#{scheduleBean.onEventMove}"   />
-				
-				<!-- REDIMENSIONAR -->
-				<p:ajax event="eventResize" listener="#{scheduleBean.onEventResize}"
-					update="#{p:component('scheduleExemploForm')}" 
-					oncomplete="PF('eventDialog').show();"	/>
-			</p:schedule>
+			<div align="center">
+				<br />
+				<p:outputLabel value="Agendamento de Consultas"
+					styleClass="estiloLabelCadastroIdentificacao" />
+				<br /> <br />
+			</div>
+		
+			<div align="center">
+				<div align="center" style="width: 1000px">
+					<p:schedule value="#{scheduleBean.model}"
+						widgetVar="scheduleExemplo" id="scheduleExemplo"
+						centerHeaderTemplate="true" timeZone="GMT-3" locale="pt_BR"
+						tooltip="true" timeFormat="HH:mm" axisFormat="H:mm"
+						view="agendaWeek" minTime="8:00" maxTime="18:01" resizable="true"
+						aspectRatio="2.0">
+
+						<!-- DATA SELECIONADA -->
+						<p:ajax event="dateSelect" listener="#{scheduleBean.onDateSelect}"
+							update="#{p:component('scheduleExemploForm')}"
+							oncomplete="PF('eventDialog').show();" />
+
+						<!-- EVENTO SELECIONADO DO AGENDAMENTO -->
+						<p:ajax event="eventSelect"
+							listener="#{scheduleBean.onEventSelect}"
+							update="#{p:component('scheduleExemploForm')}"
+							oncomplete="PF('eventDialog').show();" />
+
+						<p:ajax event="eventMove" listener="#{scheduleBean.onEventMove}" />
+
+						<!-- REDIMENSIONAR -->
+						<p:ajax event="eventResize"
+							listener="#{scheduleBean.onEventResize}"
+							update="#{p:component('scheduleExemploForm')}"
+							oncomplete="PF('eventDialog').show();" />
+					</p:schedule>
+				</div>
+			</div>
+
 		</h:form>
 		<h:form id="scheduleExemploForm">
-			<p:dialog widgetVar="eventDialog" header="Evento" responsive="true" resizable="false" closable="true" showEffect="true"
-				modal="true" style="width: 900px !important">
-				<p:panelGrid columns="2" id="panelGridEvento" 
-					styleClass="ui-panelgrid-blank" columnClasses="
+			<p:dialog widgetVar="eventDialog" header="Evento" responsive="true"
+				resizable="false" closable="true" showEffect="true" modal="true"
+				style="width: 900px !important" minimizable="true">
+				<p:panelGrid columns="2" id="panelGridEvento"
+					styleClass="ui-panelgrid-blank"
+					columnClasses="
 												   ui-g-12 ui-md-6 ui-lg-2,
 												   ui-g-12 ui-md-6 ui-lg-4">
-					
+
 					<p:outputLabel value="Titulo:" />
-					<p:inputText value="#{scheduleBean.evento.titulo}"
-						placeholder="Título" size="30"/>
-			
-					
-					<p:outputLabel value="Paciente"/>
-					<p:selectOneMenu value="scheduleBean.evento.paciente" styleClass="inputAgenda">
-					 <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-					<f:selectItems value="#{scheduleBean.pacientes}"/>
+
+					<p:inputText value="#{scheduleBean.evento.titulo}" required="true"
+						requiredMessage="Informar Titulo do Agendamento"
+						placeholder="Título" size="30" />
+
+
+
+					<p:outputLabel value="Paciente" />
+					<p:selectOneMenu value="scheduleBean.evento.paciente"
+						styleClass="inputAgenda">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{scheduleBean.pacientes}" />
 					</p:selectOneMenu>
-					
-					<p:outputLabel value="Medico"/>
-					<p:selectOneMenu value="scheduleBean.evento.medico" styleClass="inputAgenda" >
-					 <f:selectItem itemLabel="Selecione" noSelectionOption="true" />
-					<f:selectItems value="#{scheduleBean.medicos}"/>
-											
+
+					<p:outputLabel value="Medico" />
+					<p:selectOneMenu value="scheduleBean.evento.medico"
+						styleClass="inputAgenda">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{scheduleBean.medicos}" />
+
 					</p:selectOneMenu>
-					
-					 <p:outputLabel value="Agendamento:" />	
-					<p:calendar pattern="dd/MM/yyyy HH:mm" mindate="#{scheduleBean.dataAtual}"  locale="pt_BR" 
-						showButtonPanel="true" maxHour="17" timeZone="GMT-3" minHour="8"
-						value="#{scheduleBean.evento.dataInicio}" size="30" mode="inline"
+
+					<p:outputLabel value="Agendamento Inicio:" />
+					<p:calendar pattern="dd/MM/yyyy HH:mm"
+						mindate="#{scheduleBean.dataAtual}" locale="pt_BR"
+						showButtonPanel="true" maxHour="18" timeZone="GMT-3" minHour="8"
+						value="#{scheduleBean.evento.dataInicio}" size="30" 
 						placeholder="Data Início">
 					</p:calendar>
-					
-					<!--  <p:outputLabel value="Data Agendada" />	
-					<p:calendar value="#{scheduleBean.evento.dataFim}" 
-						showTodayButton="true" showButtonPanel="true"
-						pattern="dd/MM/yyyy HH:mm" placeholder="Data Fim">
-					</p:calendar> -->
-					
+
+					<p:outputLabel value="Agendamento Fim:" />
+					<p:calendar value="#{scheduleBean.evento.dataFim}"
+						locale="pt_BR"
+						showButtonPanel="true" maxHour="18" timeZone="GMT-3" minHour="8"
+						 	 size="30"
+						pattern="dd/MM/yyyy HH:mm" >
+					</p:calendar>
+
 					<!-- <p:outputLabel value="Dia Inteiro ?" for="diaInteiro" />
 					<p:selectBooleanButton id="diaInteiro"
 						value="#{scheduleBean.evento.diaInteiro}" onLabel="Sim"
 						offLabel="Não" label="Dia Inteiro" /> -->
-				  
-				   <p:outputLabel value="Tipo:" />	
-					<p:selectOneMenu value="#{scheduleBean.evento.tipoEvento}" styleClass="inputAgenda" >
+
+					<p:outputLabel value="Tipo:" />
+					<p:selectOneMenu value="#{scheduleBean.evento.tipoEvento}"
+						styleClass="inputAgenda">
 						<f:selectItems value="#{scheduleBean.tiposEventos}"
 							var="tipoEvento" itemLabel="#{tipoEvento.descricao}"
 							itemValue="#{tipoEvento}" />
 					</p:selectOneMenu>
-				</p:panelGrid>                     
-				
+
+					<p:outputLabel value="Descrição:" />
+					<p:inputTextarea rows="1" autoResize="true"
+						value="#{scheduleBean.evento.descricao}" styleClass="inputAgenda" />
+				</p:panelGrid>
+
 				<f:facet name="footer">
 					<div align="center">
-					<p:commandButton value="Fechar"
-						onclick="PF('eventDialog').hide(); return false;" />
-					<p:commandButton value="Salvar"
-						update="#{p:component('avisosGrowl')},#{p:component('scheduleExemplo')},@form"
-						process="@form" action="#{scheduleBean.salvar()}" />
-					<p:commandButton value="Remover"
-						update="#{p:component('avisosGrowl')},#{p:component('scheduleExemplo')},@form"
-						action="#{scheduleBean.remover()}" />
+						<p:commandButton value="Fechar"
+							onclick="PF('eventDialog').hide(); return false;" />
+
+						<p:commandButton value="Salvar" type="submit"
+							update="#{p:component('avisosGrowl')},#{p:component('scheduleExemplo')}"
+							process="@form" actionListener="#{scheduleBean.salvar()}" />
+
+						<p:commandButton value="Remover"
+							update="#{p:component('avisosGrowl')},#{p:component('scheduleExemplo')},@form"
+							action="#{scheduleBean.remover()}" />
 					</div>
 				</f:facet>
 			</p:dialog>

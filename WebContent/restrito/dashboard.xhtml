@@ -13,6 +13,8 @@
 
 
 		<style type="text/css">
+ .emp1 { background: yellow !important; border-color: #932c39!important; }   
+
 .main-content {
 	padding: 0;
 }
@@ -25,6 +27,15 @@ value {
 	width: 600px;
 }
 </style>
+<script> 
+function closeDialogIfSucess(xhr, status, args, dialogWidget, dialogId) {
+    if (args.validationFailed || args.KEEP_DIALOG_OPENED) {
+        jQuery('#'+dialogId).effect("bounce", {times : 4, distance : 20}, 100);
+    } 
+    else {
+    dialogWidget.hide();
+    }
+}</script>
 	</ui:define>
 
 	<ui:define name="content">
@@ -144,8 +155,8 @@ value {
 							onclick="PF('eventDialog').hide(); return false;" />
 
 						<p:commandButton value="Salvar" type="submit"
-							update="#{p:component('avisosGrowl')},#{p:component('scheduleExemplo')}"
-							process="@form" actionListener="#{scheduleBean.salvar()}" />
+							update="#{p:component('avisosGrowl')},#{p:component('scheduleExemplo')}, @form"
+							process="@form" actionListener="#{scheduleBean.salvar()}"/>
 
 						<p:commandButton value="Remover"
 							update="#{p:component('avisosGrowl')},#{p:component('scheduleExemplo')},@form"

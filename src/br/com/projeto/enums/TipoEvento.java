@@ -22,6 +22,13 @@ package br.com.projeto.enums;
 	    public String getDescricao() {
 	        return descricao;
 	    }
+	    public String setCss(String css) {
+	    	
+	        return CONSULTA.setCss("emp1") ;
+	        //RETORNO.setCss("emp2");
+	    	
+	    	 
+	    }
 
 	}
 

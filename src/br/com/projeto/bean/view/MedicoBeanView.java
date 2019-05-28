@@ -34,7 +34,7 @@ import br.com.projeto.model.classes.Medico;
 import br.com.projeto.model.classes.Pessoa;
 
 @Controller
-@Scope(value = "session")
+@Scope(value = "globalSession")
 @ManagedBean(name = "medicoBeanView")
 public class MedicoBeanView extends BeanManagedViewAbstract {
 
@@ -150,15 +150,20 @@ public class MedicoBeanView extends BeanManagedViewAbstract {
 	//Save na pagina 
 	@Override
 	public void saveNotReturn() throws Exception {
+		System.out.println("abcs");
 		list.clean();
+		System.out.println(list);
 		objetoSelecionado = medicoController.merge(objetoSelecionado);
+		System.out.println(objetoSelecionado);
 		list.add(objetoSelecionado);
+		System.out.println(list);
 		objetoSelecionado = new Medico();
 		sucesso();
 	}
 
 	@Override
 	public void saveEdit() throws Exception {
+		System.out.println("Entrou no Metodo !!!!!!!");
 		saveNotReturn();
 	}
 

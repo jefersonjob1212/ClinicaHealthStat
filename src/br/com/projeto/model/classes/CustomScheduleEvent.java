@@ -15,6 +15,8 @@ public class CustomScheduleEvent implements ScheduleEvent {
     private String description;
     private boolean allDay;
     private boolean editable;
+    private Medico medico;
+    private Paciente paciente;
 
     public CustomScheduleEvent() {
     }
@@ -27,7 +29,7 @@ public class CustomScheduleEvent implements ScheduleEvent {
         this.data = data;
     }
 
-    public CustomScheduleEvent(String title, Date start, Date end, String styleClass, boolean allDay,String description ,Object data) {
+    public CustomScheduleEvent(String title, Date start, Date end, String styleClass, boolean allDay,String description , Object data) {
         this.title = title;
         this.startDate = start;
         this.endDate = end;
@@ -35,6 +37,20 @@ public class CustomScheduleEvent implements ScheduleEvent {
         this.allDay = allDay;
         this.data = data;
         this.description = description;
+    }
+    
+    public CustomScheduleEvent(String title, Date start, Date end,
+    						   String styleClass, boolean allDay,String description , 
+    						   Medico medico, Paciente paciente, Object data) {
+        this.title = title;
+        this.startDate = start;
+        this.endDate = end;
+        this.styleClass = styleClass;
+        this.allDay = allDay;
+        this.data = data;
+        this.description = description;
+        this.medico = medico;
+        this.paciente = paciente;
     }
 
     @Override
@@ -127,5 +143,21 @@ public class CustomScheduleEvent implements ScheduleEvent {
     public void setEditable(boolean editable) {
         this.editable = editable;
     }
+
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
 }
 

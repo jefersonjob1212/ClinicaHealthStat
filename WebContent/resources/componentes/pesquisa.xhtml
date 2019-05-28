@@ -155,7 +155,7 @@
 								paginatorTemplate="{FirstPageLink}
 								   {PreviousPageLink} {PageLinks} 
 	 							   {NextPageLink} {LastPageLink} {RowsPerPageDropdown} ">
-
+	
 								<ui:include src="#{cc.attrs.colunasGridDataTableList}" />
 
 								<p:column id="colunaSelecionar" rendered="#{cc.attrs.botaoAdd}">
@@ -176,6 +176,7 @@
 				</div>
 			</div>
 		</h:form>
+		
 		<script>
 		var idCampo = getValorElementPorIdJQuery('campo');
 		var idCampoCondicao = getValorElementPorIdJQuery('condicao');

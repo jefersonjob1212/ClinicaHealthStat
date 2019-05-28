@@ -39,6 +39,15 @@ function getValorElementPorId(id) {
 	 return idundefined;
 }
 
+function closeDialogIfSucess(args, dialogWidget, dialogId) {
+    if (args.validationFailed || args.KEEP_DIALOG_OPENED) {
+        jQuery('#'+dialogId).effect("bounce", {times : 4, distance : 20}, 100);
+    } 
+    else {
+    dialogWidget.hide();
+    }
+	}
+
 function logout(contextPath){
 	
 	
@@ -99,7 +108,7 @@ function localeData_pt_br() {
 			monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
 					'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
 			dayNames : [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta',
-					'Sexta', 'S⣡do' ],
+					'Sexta', 'Diário' ],
 			dayNamesShort : [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex',
 					'Sab' ],
 			dayNamesMin : [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],

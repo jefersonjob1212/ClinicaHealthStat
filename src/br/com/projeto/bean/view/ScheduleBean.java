@@ -41,7 +41,7 @@ public class ScheduleBean extends BeanManagedViewAbstract {
 	private static final long serialVersionUID = 1L;
 
 	private ScheduleModel model;
-	private Evento evento;
+	private Evento evento = new Evento();
 	private ScheduleEvent event;
 	private List<ScheduleEvent> scheduleEvents;
 
@@ -85,7 +85,7 @@ public class ScheduleBean extends BeanManagedViewAbstract {
 
 	@PostConstruct
 	public void init() throws Exception {
-
+		
 		if (this.model != null) {
 			List<Evento> eventos = this.eventoController.listarEventos();
 			// List<Evento> eventos = this.eventoDAO.listarTodos();
@@ -104,36 +104,43 @@ public class ScheduleBean extends BeanManagedViewAbstract {
 			}
 		}
 	}
-
-	public void salvar() {
+	
+	public void validarMedico() throws Exception {
+		List<Evento> lista = eventoController.findListByQueryDinamica("FROM Evento WHERE medico_idmedico = 4" );
+			
+		
+			for (Evento evento: lista ) {
+				System.out.println(evento.getDataInicio());
+				System.out.println(evento.getMedico().getIdMedico());
+				System.out.println(evento.getTitulo());
+			}
+			
+			//System.out.println(evento.getMedico().getIdMedico());
+		}	
+	
+	
+	public void salvar() throws Exception {
 		// salva o construtor que implementa a interface do Schedule com os atributos.
-		try {
 			ScheduleEvent newEvent = new CustomScheduleEvent(this.evento.getTitulo(), this.evento.getDataInicio(),
 					this.evento.getDataFim(), this.evento.getTipoEvento().getCss(), this.evento.isDiaInteiro(),
-					this.evento.getDescricao(), this.evento);
+					this.evento.getDescricao(), this.evento.getMedico(), this.evento.getPaciente(), this.evento); 		
 			
-			//DateInicio vem antes da DataFim
-			if(evento.getDataInicio().compareTo(evento.getDataFim() ) < 0) {
-				if (evento.getId() == null )   {
+			// DateInicio vem antes da DataFim
+			//validarMedico();
+			if (evento.getDataInicio().compareTo(evento.getDataFim()) < 0) {
+				if (evento.getId() == null) {
 					model.addEvent(newEvent);
-					// eventoController.persist(evento);
-				}else {
+				} else {
 					newEvent.setId(event.getId());
 					model.updateEvent(newEvent);
 					// eventoController.merge(evento);
 				}
-			}else {
 				eventoController.merge(evento);
-				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento Salvo",
-					"Agendamento para:  " + evento.getPaciente().getPessoa().getPessoaNome());
-				addMessage(message);
-			}
-			} catch (Exception sql) {
-			sql.getMessage();
-			FacesMessage erro = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Data Inicial não pode ser maior que a data de fim", "");
-			addMessage(erro);
-		}
+				FacesMessage message = new FacesMessage
+						(FacesMessage.SEVERITY_INFO, "Agendamento Salvo",
+						"Agendamento para:  " + evento.getTitulo());
+							addMessage(message);
+			} 
 	}
 
 	public void remover() throws Exception {

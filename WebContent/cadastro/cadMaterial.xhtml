@@ -18,6 +18,12 @@
 	
 		<ui:define name="content">
 		<h:form id="formCadastroMaterial" prependId="false">
+		<div align="center">
+				<br />
+				<p:outputLabel value="Cadastro de Materiais"
+					styleClass="estiloLabelCadastroIdentificacao" />
+				<br /> <br />
+			</div>
 			<div class="ui-fluid">
 				<div class="ui-g">
 					<div class="ui-g-12">
@@ -48,7 +54,7 @@
 
 										<!-- Label Quantidade -->
 										<h:outputLabel for="quantidadeMaterial"
-											id="labelQuantidadeMaterial" value="Qtd:*" />
+											id="labelQuantidadeMaterial" value="Quantidade:*" />
 
 										<p:inputMask autocomplete="false" maxlength="8"
 											placeholder="Quantidade" id="quantidadeMaterial"
@@ -62,10 +68,12 @@
 										<h:outputLabel for="valorUnitario" id="labelValorUnitario"
 											value="R$ Valor:*" />
 
-										<p:inputMask id="valorUnitario" rendered="true"
+										<p:inputText id="valorUnitario" rendered="true"
 											placeholder="R$ Valor Unitário"
-											requiredMessage="Informe a valor do material" mask="99"
-											value="#{materialBeanView.objetoSelecionado.valorUnitario}" />
+											requiredMessage="Informe a valor do material" 
+											value="#{materialBeanView.objetoSelecionado.valorUnitario}" >
+											 <f:convertNumber pattern="#,##0.00"/>
+											</p:inputText>
 
 										<!-- Label Cidade do Paciente -->
 										<h:outputLabel id="labelSelectNomeFornecedor"

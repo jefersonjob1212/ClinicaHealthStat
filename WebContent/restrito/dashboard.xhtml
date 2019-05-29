@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
-	<ui:define name="title">Dashboard</ui:define>
+	<ui:define name="title">Pagina Inicial</ui:define>
 
 	<ui:define name="head">
 		<h:outputScript name="scripty.js" library="javascript"
@@ -26,22 +26,29 @@
 value {
 	width: 600px;
 }
+/*Tamanho do Filtro dentro do ComboBox*/
+.ui-selectonemenu-panel .ui-selectonemenu-filter{
+
+width: 100%;
+    padding-right: 35px;
+}
+/*Posição da Lupa do Filtro*/
+.ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-icon{
+	position: absolute;
+    top: 10px;
+    right: 1px;
+    left: 225px;
+}
+
+
 </style>
-<script> 
-function closeDialogIfSucess(xhr, status, args, dialogWidget, dialogId) {
-    if (args.validationFailed || args.KEEP_DIALOG_OPENED) {
-        jQuery('#'+dialogId).effect("bounce", {times : 4, distance : 20}, 100);
-    } 
-    else {
-    dialogWidget.hide();
-    }
-}</script>
+
 	</ui:define>
 
 	<ui:define name="content">
 		<!-- <h:outputStylesheet library="css" name="schedule.css"/>
         <h:outputScript library="js" name="schedule.js"/> -->
-		<p:growl id="avisosGrowl" showDetail="true" />
+		<p:growl id="avisosGrowl"  />
 		<h:form>
 			<div align="center">
 				<br />
@@ -83,51 +90,58 @@ function closeDialogIfSucess(xhr, status, args, dialogWidget, dialogId) {
 
 		</h:form>
 		<h:form id="scheduleExemploForm">
-			<p:dialog widgetVar="eventDialog" header="Evento" responsive="true"
+			<p:dialog widgetVar="eventDialog"  responsive="true"
 				resizable="false" closable="true" showEffect="true" modal="true"
-				style="width: 900px !important" minimizable="true">
-				<p:panelGrid columns="2" id="panelGridEvento"
+				style="width: 1000px !important" minimizable="true">
+				<p:panelGrid columns="2" id="panelGridEvento"   
 					styleClass="ui-panelgrid-blank"
-					columnClasses="
-												   ui-g-12 ui-md-6 ui-lg-2,
-												   ui-g-12 ui-md-6 ui-lg-4">
-
+					>
+					
+					<p:outputLabel value="Agendamento:" />
+					<p:selectOneRadio value="#{scheduleBean.evento.tipoEvento}" 
+						styleClass="inputAgenda">
+						<f:selectItems value="#{scheduleBean.tiposEventos}"
+							var="tipoEvento" itemLabel="#{tipoEvento.descricao}"
+							itemValue="#{tipoEvento}"/>
+					</p:selectOneRadio>
+					
 					<p:outputLabel value="Titulo:" />
-
 					<p:inputText value="#{scheduleBean.evento.titulo}" required="true"
 						requiredMessage="Informar Titulo do Agendamento"
-						placeholder="Título" size="30" />
-
-
+						placeholder="Titulo do Agendamento" size="30" />
 
 					<p:outputLabel value="Paciente" />
-					<p:selectOneMenu value="scheduleBean.evento.paciente"
-						styleClass="inputAgenda">
-						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<p:selectOneMenu value="#{scheduleBean.evento.paciente}" filter="true" 
+					filterPlaceholder="Lista de Pacientes" autoWidth="true"  required="true"
+					requiredMessage="Informe um Paciente para o Agendamento" 
+						styleClass="inputAgenda" converter="pacienteConverter">
+						<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{scheduleBean.pacientes}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Medico" />
-					<p:selectOneMenu value="scheduleBean.evento.medico"
-						styleClass="inputAgenda">
-						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+					<p:selectOneMenu value="#{scheduleBean.evento.medico}"
+					filter="true" filterPlaceholder="Lista de Médicos" autoWidth="true"  required="true" 
+					requiredMessage="Informe um Médico para o Agendamento"
+						styleClass="inputAgenda" converter="medicoConverter">
+						<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
 						<f:selectItems value="#{scheduleBean.medicos}" />
-
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Agendamento Inicio:" />
+					<p:outputLabel value="Hora Inicio:" />
 					<p:calendar pattern="dd/MM/yyyy HH:mm"
-						mindate="#{scheduleBean.dataAtual}" locale="pt_BR"
-						showButtonPanel="true" maxHour="18" timeZone="GMT-3" minHour="8"
-						value="#{scheduleBean.evento.dataInicio}" size="30" 
-						placeholder="Data Início">
+						mindate="#{scheduleBean.dataAtual}" locale="pt_BR" autocomplete="true"
+						showButtonPanel="true" maxHour="18" timeZone="GMT-3" minHour="8" showTodayButton="false"
+						showOn="button"
+						value="#{scheduleBean.evento.dataInicio}" size="26"   
+						>
 					</p:calendar>
 
-					<p:outputLabel value="Agendamento Fim:" />
+					<p:outputLabel value="Hora Fim:" />
 					<p:calendar value="#{scheduleBean.evento.dataFim}"
-						locale="pt_BR"
-						showButtonPanel="true" maxHour="18" timeZone="GMT-3" minHour="8"
-						 	 size="30"
+						locale="pt_BR" mindate="#{scheduleBean.dataAtual}" autocomplete="true"
+						showButtonPanel="true" showTodayButton="false" maxHour="18" timeZone="GMT-3" minHour="8"
+						 	 size="26" showOn="button"
 						pattern="dd/MM/yyyy HH:mm" >
 					</p:calendar>
 
@@ -136,17 +150,9 @@ function closeDialogIfSucess(xhr, status, args, dialogWidget, dialogId) {
 						value="#{scheduleBean.evento.diaInteiro}" onLabel="Sim"
 						offLabel="Não" label="Dia Inteiro" /> -->
 
-					<p:outputLabel value="Tipo:" />
-					<p:selectOneMenu value="#{scheduleBean.evento.tipoEvento}"
-						styleClass="inputAgenda">
-						<f:selectItems value="#{scheduleBean.tiposEventos}"
-							var="tipoEvento" itemLabel="#{tipoEvento.descricao}"
-							itemValue="#{tipoEvento}" />
-					</p:selectOneMenu>
-
-					<p:outputLabel value="Descrição:" />
+					<p:outputLabel value="Observação:" />
 					<p:inputTextarea rows="1" autoResize="true"
-						value="#{scheduleBean.evento.descricao}" styleClass="inputAgenda" />
+						value="#{scheduleBean.evento.descricao}" style="width: 242px"  />
 				</p:panelGrid>
 
 				<f:facet name="footer">

@@ -8,36 +8,30 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import br.com.projeto.geral.controller.EspecialidadeController;
+import br.com.framework.hibernate.session.HibernateUtil;
 import br.com.projeto.model.classes.Especialidade;
 
 @FacesConverter( value="especialidadeConverter",forClass = Especialidade.class)
 public class EspecialidadeConverter implements Converter, Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Override
-	public Object getAsObject(FacesContext arg0, UIComponent arg1, String value) {
-	//	Especialidade toReturn = null;
-	//	if (value != null) {
-			//Long codigo = new Long(value); 
-			try {
-				return new EspecialidadeController().findByPorId(Especialidade.class, Integer.valueOf(value).longValue());
-			} catch (Exception e) {
-				return new Especialidade();
-			}
+	public Object getAsObject(FacesContext arg0, UIComponent arg1, String codigo) {
+		if (codigo != null && !codigo.isEmpty()){
+			return (Especialidade) HibernateUtil.getCurrentSession().get(Especialidade.class, new Long(codigo));
 		}
-//	}
+		return codigo;
+	}
 
 	@Override
-	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
-		 try {
-	            return String.valueOf(((Especialidade) value).getIdEspecialidade());
-	        } catch (Exception e) {
-	            return "";
-	        }
-	    }
-		//return String.valueOf(especialidade.getIdEspecialidade().longValue());
+	public String getAsString(FacesContext arg0, UIComponent arg1, Object objeto) {
+		if (objeto != null){
+			Especialidade c = (Especialidade) objeto;
+			return c.getIdEspecialidade() != null && c.getIdEspecialidade() > 0 ? c.getIdEspecialidade().toString() : null;
+		}
+		return null;
+	}
 
 	}
 

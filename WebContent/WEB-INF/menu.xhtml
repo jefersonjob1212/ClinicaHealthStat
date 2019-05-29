@@ -45,9 +45,13 @@
 											icon="fa fa-user-o"
 											action="#{medicoBeanView.redirecionarFindEntidade}" />
 									</sec:ifAnyGranted>
-
-
 								</p:submenu>
+								
+								<sec:ifAnyGranted roles="PACIENTE_ACESSAR, ADMIN">
+									<p:menuitem id="item_menu_paciente" value="Paciente"
+										icon="fa fa-user-o"
+										action="#{pacienteBeanView.redirecionarFindEntidade}" />
+								</sec:ifAnyGranted>
 
 								<sec:ifAnyGranted roles="CIDADE_ACESSAR, ADMIN">
 									<p:menuitem id="item_menu_cidade" value="Cidade"
@@ -85,11 +89,6 @@
 										action="#{materialBeanView.redirecionarFindEntidade}" />
 								</sec:ifAnyGranted>
 
-								<sec:ifAnyGranted roles="PACIENTE_ACESSAR, ADMIN">
-									<p:menuitem id="item_menu_paciente" value="Paciente"
-										icon="fa fa-user-o"
-										action="#{pacienteBeanView.redirecionarFindEntidade}" />
-								</sec:ifAnyGranted>
 
 								<sec:ifAnyGranted roles="UNIDADE_DE_MEDIDA_ACESSAR, ADMIN">
 									<p:menuitem id="item_menu_unidade_de_medida"
@@ -102,29 +101,7 @@
 							</p:submenu>
 
 
-							<!-- <p:submenu id="pm_menu" label="Tipos de Menus" icon="fa fa-cog">
-								<p:menuitem id="pm_static_menu" value="Static Menu"
-									icon="fa fa-bars"
-									actionListener="#{guestPreferences.setOverlayMenu(false)}"
-									ajax="false" />
-								<p:menuitem id="pm_overlay_menu" value="Overlay Menu"
-									icon="fa fa-bars"
-									actionListener="#{guestPreferences.setOverlayMenu(true)}"
-									ajax="false" />
-								<p:menuitem id="pm_slim_menu" value="Slim Menu"
-									icon="fa fa-bars"
-									actionListener="#{guestPreferences.setSlimMenu(true)}"
-									ajax="false" />
-								<p:menuitem id="pm_light_menu" value="Light Menu"
-									icon="fa fa-sun-o"
-									actionListener="#{guestPreferences.setDarkMenu(false)}"
-									ajax="false" />
-								<p:menuitem id="pm_dark_menu" value="Dark Menu"
-									icon="fa fa-moon-o"
-									actionListener="#{guestPreferences.setDarkMenu(true)}"
-									ajax="false" />
-							</p:submenu> -->
-
+						
 							<p:submenu id="pm_hierarchy_temas" label="Alterar Tema"
 								icon="fa fa-dashboard">
 

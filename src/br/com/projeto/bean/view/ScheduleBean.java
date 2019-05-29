@@ -85,7 +85,7 @@ public class ScheduleBean extends BeanManagedViewAbstract {
 
 	@PostConstruct
 	public void init() throws Exception {
-		
+
 		if (this.model != null) {
 			List<Evento> eventos = this.eventoController.listarEventos();
 			// List<Evento> eventos = this.eventoDAO.listarTodos();
@@ -95,7 +95,7 @@ public class ScheduleBean extends BeanManagedViewAbstract {
 			for (Evento eventoAtual : eventos) { // lista que popula os eventos e inseri
 				ScheduleEvent newEvent = new CustomScheduleEvent(eventoAtual.getTitulo(), eventoAtual.getDataInicio(),
 						eventoAtual.getDataFim(), eventoAtual.getTipoEvento().getCss(), eventoAtual.isDiaInteiro(),
-						eventoAtual.getDescricao(), eventoAtual);
+						eventoAtual.getDescricao(), eventoAtual.getMedico(), eventoAtual.getPaciente(), eventoAtual);
 				if (!this.scheduleEvents.contains(newEvent)) {
 					newEvent.setId(eventoAtual.getId().toString());
 					this.scheduleEvents.add(newEvent);
@@ -104,49 +104,48 @@ public class ScheduleBean extends BeanManagedViewAbstract {
 			}
 		}
 	}
+
+	public boolean validarMedico() throws Exception {
 	
-	public void validarMedico() throws Exception {
-		List<Evento> lista = eventoController.findListByQueryDinamica("FROM Evento WHERE medico_idmedico = 4" );
-			
+		List<Evento> lista = 
+		eventoController.
+		findListByQueryDinamica("FROM Evento e WHERE e.medico.idMedico = "	+ evento.getMedico().getIdMedico());
 		
-			for (Evento evento: lista ) {
-				System.out.println(evento.getDataInicio());
-				System.out.println(evento.getMedico().getIdMedico());
-				System.out.println(evento.getTitulo());
-			}
-			
-			//System.out.println(evento.getMedico().getIdMedico());
-		}	
-	
-	
+
+		/*+" and e.dataInicio >= "+evento.getDataInicio().TO +  " and e.dataFim <= " +evento.getDataFim() */
+		
+		return lista.isEmpty();
+	}
+
 	public void salvar() throws Exception {
 		// salva o construtor que implementa a interface do Schedule com os atributos.
-			ScheduleEvent newEvent = new CustomScheduleEvent(this.evento.getTitulo(), this.evento.getDataInicio(),
-					this.evento.getDataFim(), this.evento.getTipoEvento().getCss(), this.evento.isDiaInteiro(),
-					this.evento.getDescricao(), this.evento.getMedico(), this.evento.getPaciente(), this.evento); 		
+		ScheduleEvent newEvent = new CustomScheduleEvent(this.evento.getTitulo(), this.evento.getDataInicio(),
+				this.evento.getDataFim(), this.evento.getTipoEvento().getCss(), this.evento.isDiaInteiro(),
+				this.evento.getDescricao(), this.evento.getMedico(), this.evento.getPaciente(), this.evento);
+
+		if (evento.getDataInicio().before(evento.getDataFim()) && validarMedico()) {
 			
-			// DateInicio vem antes da DataFim
-			//validarMedico();
-			if (evento.getDataInicio().compareTo(evento.getDataFim()) < 0) {
-				if (evento.getId() == null) {
-					model.addEvent(newEvent);
-				} else {
-					newEvent.setId(event.getId());
-					model.updateEvent(newEvent);
-					// eventoController.merge(evento);
-				}
-				eventoController.merge(evento);
-				FacesMessage message = new FacesMessage
-						(FacesMessage.SEVERITY_INFO, "Agendamento Salvo",
-						"Agendamento para:  " + evento.getTitulo());
-							addMessage(message);
-			} 
+			if (evento.getId() == null) {
+				model.addEvent(newEvent);
+			} else {
+				newEvent.setId(event.getId());
+				model.updateEvent(newEvent);
+				// eventoController.merge(evento);
+			}
+			eventoController.merge(evento);
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento Salvo",
+					"Agendamento para:  " + evento.getTitulo());
+			addMessage(message);
+		}else {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Já existe um médico cadastrado",
+					"" );
+			addMessage(message);
+		}
 	}
 
 	public void remover() throws Exception {
 		model.deleteEvent(event);
 		eventoController.delete(evento);
-		// eventoDAO.remover(evento);
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agendamento Removido",
 				"Agendamento Removido :" + evento.getTitulo());
 		addMessage(message);
@@ -156,10 +155,11 @@ public class ScheduleBean extends BeanManagedViewAbstract {
 	public void onDateSelect(SelectEvent selectEvent) {
 		this.evento = new Evento();
 		Date dataSelecionada = (Date) selectEvent.getObject();
+		@SuppressWarnings("unused")
 		DateTime dataSelecionadaJoda = new DateTime(dataSelecionada.getTime());
 		this.evento.setDataInicio(dataSelecionada);
 		// Adiciona 30min por consulta
-		this.evento.setDataFim(dataSelecionadaJoda.plusMinutes(30).toDate());
+		//this.evento.setDataFim(dataSelecionadaJoda.plusMinutes(30).toDate());
 	}
 
 	// EVENTO DE SELEÇÃO DOS HORARIOS AGENDADOS

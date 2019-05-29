@@ -68,6 +68,12 @@
 
 
 		<h:form id="formCadastro" prependId="false">
+			<div align="center">
+				<br />
+				<p:outputLabel value="Cadastro de Doenças"
+					styleClass="estiloLabelCadastroIdentificacao" />
+				<br /> <br />
+			</div>
 			<div class="ui-fluid">
 				<div class="ui-g">
 					<div class="ui-g-12">
@@ -110,16 +116,12 @@
 											requiredMessage="Informe o CID" />
 
 
-								</p:panelGrid>
-									<h6 style="
-										color: red; 
-										font-weight: bold; 
-										font-style: italic;" >
-										Campos marcados com * são Obrigatorios
-									</h6>
-								
-								<div align="center">
-									<!-- Chama Botões  Recarrega Template growl messages e tabela de resultados-->
+									</p:panelGrid>
+									<h6 style="color: red; font-weight: bold; font-style: italic;">
+										Campos marcados com * são Obrigatorios</h6>
+
+									<div align="center">
+										<!-- Chama Botões  Recarrega Template growl messages e tabela de resultados-->
 										<util:botoesCrud managedBeanView="#{doencaBeanView}"
 											camposReload=":formTemplate:msg, tableResult"
 											botaoNovo="#{contextoBean.possuiAcesso('DOENCA_NOVO', 'ADMIN')}"
@@ -128,14 +130,14 @@
 											botaoAtualizar="#{contextoBean.possuiAcesso('DOENCA_EDITAR', 'ADMIN') 
 												 and doencaBeanView.objetoSelecionado.idDoenca != null}"
 											botaoRedirecionar="#{contextoBean.possuiAcesso('ACESSO_REDIRECIONAR', 'ADMIN')}"
-											botaoExcluir= "false">
+											botaoExcluir="false">
 										</util:botoesCrud>
-								</div>
+									</div>
 								</p:tab>
-								
+
 							</p:tabView>
-							
-							
+
+
 						</div>
 					</div>
 				</div>
@@ -143,11 +145,11 @@
 		</h:form>
 
 	</ui:define>
-		<!-- JavaScript de Foco no Nome da DOENÇA Configuração do Enter  -->
-		<script type="text/javascript" charset="UTF-8">
-			addFocoCampo("nomeDoenca");
-			gerenciaTeclaEnter();
-		</script>
+	<!-- JavaScript de Foco no Nome da DOENÇA Configuração do Enter  -->
+	<script type="text/javascript" charset="UTF-8">
+		addFocoCampo("nomeDoenca");
+		gerenciaTeclaEnter();
+	</script>
 
 
 </ui:composition>

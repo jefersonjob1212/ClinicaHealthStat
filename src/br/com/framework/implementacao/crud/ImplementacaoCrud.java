@@ -121,10 +121,15 @@ public class ImplementacaoCrud<T> implements InterfaceCrud<T>, Serializable  {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<T> findListByQueryDinamica(String s) throws Exception {
+	public List<T> findListByQueryDinamica(String s, String... param, Object... value) throws Exception {
 		validaSessionFactory();
 		List<T> lista = new ArrayList<T>();
-		lista = sessionFactory.getCurrentSession().createQuery(s).list();
+		Query q = sessionFactory.getCurrentSession().createQuery(s);
+		for(String p: param){
+			int i = param.indexOf(p);
+			q.setParam(p, value[i];
+		}
+		lista = q.list();
 		return lista;
 	}
 

@@ -23,7 +23,7 @@ public interface InterfaceCrud<T> extends Serializable {
 	// salva ou atualiza
 	void saveOrUpdate(T obj) throws Exception;
 	
-	// realiza o update/atualizaÁ„o de dados
+	// realiza o update/atualiza√ß√£o de dados
 	void update(T obj) throws Exception;
 	
 	// realiza o delete de dados
@@ -39,7 +39,7 @@ public interface InterfaceCrud<T> extends Serializable {
 	
 	T findByPorId(Class<T> entidade, Long id) throws Exception;
 	
-	List<T> findListByQueryDinamica(String s) throws Exception;
+	List<T> findListByQueryDinamica(String s, String... param, Object... value) throws Exception;
 	
 	// executar update com HQL
 	void executeUpdateQueryDinamica(String s) throws Exception;
@@ -48,10 +48,10 @@ public interface InterfaceCrud<T> extends Serializable {
 	void executeUpdateSQLDinamica(String s) throws Exception;
 	
 	
-	// limpa a sess„o do Hibernate
+	// limpa a sess√£o do Hibernate
 	void clearSession() throws Exception;
 	
-	// Retira um objeto da sess„o do hibernate
+	// Retira um objeto da sess√£o do hibernate
 	void evict (Object objs) throws Exception;
 	
 	Session getSession() throws Exception;
